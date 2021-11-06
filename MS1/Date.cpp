@@ -99,15 +99,16 @@ namespace sdds {
 		is >> m_day;
 
 		if (is.fail()) {
-			errCode(CIN_FAILED);
 			is.clear();
 			is.ignore(10000, '\n');
+			errCode(CIN_FAILED);
+			
 		}
 		else
 		{
 			validate();
 		}
-		is.ignore(10000, '\n');
+		//is.ignore(10000, '\n');
 		return is;
 	};
 
