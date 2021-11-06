@@ -130,3 +130,29 @@ namespace sdds {
 		};
 		return os;
 	}
+
+	bool Date::operator==(Date& RO)const {
+		return(daysSince0001_1_1() == RO.daysSince0001_1_1() ? true : false);
+	};
+
+	bool Date::operator!=(Date& RO)const {
+		return(daysSince0001_1_1() != RO.daysSince0001_1_1() ? true : false);
+	};
+
+	bool Date::operator>=(Date& RO)const {
+		return(daysSince0001_1_1() >= RO.daysSince0001_1_1() ? true : false);
+	};
+
+	bool Date::operator<=(Date& RO)const {
+		return(daysSince0001_1_1() <= RO.daysSince0001_1_1() ? true : false);
+	};
+
+	bool Date::operator<(Date& RO)const {
+		return(daysSince0001_1_1() < RO.daysSince0001_1_1() ? true : false);
+	};
+
+	bool Date::operator>(Date& RO)const {
+		return(daysSince0001_1_1() > RO.daysSince0001_1_1() ? true : false);
+	};
+}
+

@@ -53,6 +53,12 @@ namespace sdds {
 
 		std::ostream& write(std::ostream& os = std::cout)const;
 
+		bool operator==(Date& RO)const;
+		bool operator!=(Date& RO)const;
+		bool operator>=(Date& RO)const;
+		bool operator<=(Date& RO)const;
+		bool operator<(Date& RO)const;
+		bool operator>(Date& RO)const;
 
 	};
 	std::ostream& operator<<(std::ostream& os, const Date& RO);
