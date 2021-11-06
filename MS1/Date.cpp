@@ -111,8 +111,22 @@ namespace sdds {
 		return is;
 	};
 
+	ostream& Date::write(ostream& os)const {
 
-
-
-
-}
+		if (bad())
+			os << dateStatus();
+		else
+		{
+			os << m_year;
+			os << "/";
+			os.width(2);
+			os.fill('0');
+			os << m_mon;
+			os.fill(' ');
+			os << "/";
+			os.width(2);
+			os.fill('0');
+			os << m_day;
+		};
+		return os;
+	}

@@ -51,6 +51,8 @@ namespace sdds {
 
 		std::istream& read(std::istream& is = std::cin);
 
+		std::ostream& write(std::ostream& os = std::cout)const;
+
 
 	};
 	std::ostream& operator<<(std::ostream& os, const Date& RO);
