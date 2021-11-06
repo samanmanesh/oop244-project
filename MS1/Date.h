@@ -61,6 +61,8 @@ namespace sdds {
 		bool operator>(Date& RO)const;
 
 		int operator-(Date& RO)const;
+
+		operator bool() const;
 	};
 	std::ostream& operator<<(std::ostream& os, const Date& RO);
 	std::istream& operator>>(std::istream& is, Date& RO);

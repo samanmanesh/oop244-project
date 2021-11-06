@@ -159,6 +159,8 @@ namespace sdds {
 		return( daysSince0001_1_1() - RO.daysSince0001_1_1());
 	};
 
-
+	Date::operator bool() const {
+		return (!bad()); // return true if its not bad that m_ErrorCode != 0
+	};
 }
 
