@@ -154,5 +154,11 @@ namespace sdds {
 	bool Date::operator>(Date& RO)const {
 		return(daysSince0001_1_1() > RO.daysSince0001_1_1() ? true : false);
 	};
+
+	int Date::operator-(Date& RO)const {
+		return( daysSince0001_1_1() - RO.daysSince0001_1_1());
+	};
+
+
 }
 
