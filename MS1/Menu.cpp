@@ -35,7 +35,17 @@ namespace sdds {
 
 	MenuItem::operator const char* () const {
 
-		return this->m_contentOfMenu;
+		return m_contentOfMenu;
 	};
+
+	ostream& MenuItem::display(ostream& ostr) {
+	
+		if (*this)
+		{
+			ostr << m_contentOfMenu;
+		}
+		return ostr;
+	};
+
 
 }

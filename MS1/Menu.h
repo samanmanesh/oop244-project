@@ -11,8 +11,11 @@ namespace sdds {
 		char* m_contentOfMenu{};
 
 		MenuItem(const char* content);
+
 		MenuItem(const MenuItem& MI) = delete;
+		
 		void operator= (const MenuItem& MI) = delete;
+		
 		~MenuItem();
 		
 		void setEmpty();
@@ -20,6 +23,8 @@ namespace sdds {
 		operator bool() const;
 		
 		operator const char*() const;
+
+		std::ostream& display(std::ostream& ostr = std::cout);
 
 		friend class Menu;
 	};
