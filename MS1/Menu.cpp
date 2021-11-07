@@ -25,12 +25,17 @@ namespace sdds {
 	}
 
 	MenuItem::~MenuItem() {
-	
+
 		delete[]m_contentOfMenu;
 	};
 
 	MenuItem::operator bool() const {
 		return  (m_contentOfMenu && m_contentOfMenu[0]);
+	};
+
+	MenuItem::operator const char* () const {
+
+		return this->m_contentOfMenu;
 	};
 
 }
