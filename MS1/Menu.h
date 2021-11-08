@@ -74,7 +74,9 @@ namespace sdds {
 
 		 operator bool();
 
-		 std::ostream& operator<<(std::ostream& ostr=std::cout);
+		 std::ostream& operator<<(std::ostream& ostr );
+
+		 const char* operator[](int index) const;
 	};
 
 }

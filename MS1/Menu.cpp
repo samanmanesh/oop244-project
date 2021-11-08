@@ -208,6 +208,15 @@ namespace sdds {
 		return ostr;
 	};
 	
+	const char* Menu:: operator[](int index) const{
+		
+		if (index > m_noMenuPointers)
+		{
+			return;
+		}
 
+		return(m_arrOfMenuPointers[index]->m_contentOfMenu);
+	
+	}
 
 }
