@@ -60,6 +60,9 @@ namespace sdds {
 
 		std::ostream& displayMenu(std::ostream& ostr = std::cout);
 
+		int getInt(int minRange, int maxRange, const char* errorMessage);
+
+		int run();
 	};
 
 }

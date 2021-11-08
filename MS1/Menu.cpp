@@ -26,7 +26,7 @@ namespace sdds {
 	}
 
 	void MenuItem::setContent(const char* content) {
-	
+
 		if (content && content[0])
 		{
 			m_contentOfMenu = new char[strlen(content) + 1];
@@ -36,7 +36,7 @@ namespace sdds {
 		{
 			setEmpty();
 		}
-	
+
 	}
 
 	void MenuItem::setEmpty() {
@@ -58,7 +58,7 @@ namespace sdds {
 	};
 
 	ostream& MenuItem::display(ostream& ostr) {
-	
+
 		if (*this)
 		{
 			ostr << m_contentOfMenu;
@@ -67,48 +67,48 @@ namespace sdds {
 	};
 
 
-	Menu::Menu(){
+	Menu::Menu() {
 
 		m_arrOfMenuPointers = nullptr;
 		m_noMenuPointers = 0;
-	
+
 	};
 
 	Menu::Menu(const char* title) {
-	
-		m_menuItemTitle.setContent(title) ;
+
+		m_menuItemTitle.setContent(title);
 	};
 
 
 	Menu::~Menu() {
-	
+
 		for (int i = 0; i < MAX_MENU_ITEMS; i++)
-		{	
+		{
 			//check  Am not sure
 			delete[] m_arrOfMenuPointers[i];
 		}
-	
+
 	};
 
 	void Menu::displayTitleMenu() {
-	
+
 		if (m_menuItemTitle)
 		{
 			m_menuItemTitle.display();
 		}
-	
+
 	};
 
 
 	ostream& Menu::displayMenu(ostream& ostr) {
-		
+
 		if (m_menuItemTitle)
 		{
 			m_menuItemTitle.display();
 			ostr << ":" << endl;
 		}
 		for (int i = 0; i < MAX_MENU_ITEMS; i++)
-		{	
+		{
 			ostr.width(2);
 			ostr.setf(ios::right);
 			ostr << i + 1 << "- ";
@@ -117,6 +117,48 @@ namespace sdds {
 		}
 		ostr << " 0- Exit" << endl;
 		ostr << "> ";
+
+		return ostr;
 	}
+
+	// the fuction shoud move to Util when it works properly 
+	int Menu::getInt(int minRange, int maxRange, const char* errorMessage) {
+		int selectedItem = 0;
+		bool trueInt = false;
+		while (!trueInt)
+		{
+			cin >> selectedItem;
+			if (!cin.fail())
+			{
+				if (selectedItem > minRange && selectedItem < maxRange)
+				{
+					trueInt = true;
+				}
+				else
+				{
+					cout << errorMessage;
+				}
+			}
+			else
+			{
+				cin.clear();
+				cin.ignore(1000, '\n');
+			}
+		}
+		return selectedItem;
+	};
+
+	int Menu::run() {
+		
+		int selectedItem;
+		
+		displayMenu();
+		
+		selectedItem = getInt(0, MAX_MENU_ITEMS, "Invalid Selection, try again: ");
+
+		return selectedItem;
+	}
+
+
 
 }
