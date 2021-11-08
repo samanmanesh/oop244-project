@@ -69,10 +69,7 @@ namespace sdds {
 
 
 	Menu::Menu() {
-
-		
 		m_noMenuPointers = 0;
-
 	};
 
 	Menu::Menu(const char* title):m_menuItemTitle(title) {
@@ -181,8 +178,6 @@ namespace sdds {
 		if (m_noMenuPointers < MAX_MENU_ITEMS)
 		{
 			MenuItem* newMenuItem =  new MenuItem(menuitemConent);
-			//	MenuItem* newMenuItem = nullptr;
-			//newMenuItem = new MenuItem{};
 		
 			m_arrOfMenuPointers[m_noMenuPointers] = newMenuItem ;
 
@@ -190,6 +185,16 @@ namespace sdds {
 		}
 		
 		return *this;
+	};
+
+	Menu::operator int() {
+	
+		return m_noMenuPointers;
+	};
+
+	Menu::operator unsigned int() {
+
+		return m_noMenuPointers;
 	};
 
 

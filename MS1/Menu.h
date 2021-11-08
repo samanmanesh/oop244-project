@@ -69,6 +69,8 @@ namespace sdds {
 
 		Menu& operator<<(const char* menuitemConent);
 
+		 operator int();
+		 operator unsigned int();
 	};
 
 }
