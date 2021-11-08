@@ -107,7 +107,7 @@ namespace sdds {
 			m_menuItemTitle.display();
 			ostr << ":" << endl;
 		}
-		for (int i = 0; i < MAX_MENU_ITEMS; i++)
+		for (int i = 0; i < m_noMenuPointers; i++)
 		{
 			ostr.width(2);
 			ostr.setf(ios::right);
@@ -150,7 +150,7 @@ namespace sdds {
 
 	int Menu::run() {
 		
-		int selectedItem;
+		unsigned int selectedItem;
 		
 		displayMenu();
 		
@@ -170,6 +170,22 @@ namespace sdds {
 		return selectedItem;
 	};
 
+	Menu& Menu::operator<<(const char* menuitemConent) {
+	
+		if (m_arrOfMenuPointers[m_noMenuPointers + 1] < MAX_MENU_ITEMS)
+		{
+			MenuItem newMenuItem(menuitemConent);
+			//MenuItem* newMenuItem = nullptr;
+			//newMenuItem = new MenuItem{ menuitemConent};
+
+			//m_arrOfMenuPointers[m_noMenuPointers + 1] = newMenuItem;
+
+			m_noMenuPointers++;
+		}
+		
+		
+		return *this;
+	};
 
 
 }

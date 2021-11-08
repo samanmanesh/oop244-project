@@ -3,7 +3,7 @@
 #include <iostream>
 namespace sdds {
 	class Menu;
-	const int  MAX_MENU_ITEMS = 20;
+	const unsigned int  MAX_MENU_ITEMS = 20;
 
 	class MenuItem
 	{
@@ -65,6 +65,9 @@ namespace sdds {
 		int run();
 
 		int operator~();
+
+		Menu& operator<<(const char* menuitemConent);
+
 	};
 
 }
