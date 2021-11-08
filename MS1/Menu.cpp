@@ -14,7 +14,7 @@ namespace sdds {
 
 	MenuItem::MenuItem(const char* content) {
 
-		if (content && content[0])
+		/*if (content && content[0])
 		{
 			m_contentOfMenu = new char[strlen(content) + 1];
 			strcpy(m_contentOfMenu, content);
@@ -22,7 +22,8 @@ namespace sdds {
 		else
 		{
 			setEmpty();
-		}
+		}*/
+		setContent(content);
 	}
 
 	void MenuItem::setContent(const char* content) {
@@ -69,14 +70,14 @@ namespace sdds {
 
 	Menu::Menu() {
 
-		m_arrOfMenuPointers = nullptr;
+		
 		m_noMenuPointers = 0;
 
 	};
 
-	Menu::Menu(const char* title) {
+	Menu::Menu(const char* title):m_menuItemTitle(title) {
 
-		m_menuItemTitle.setContent(title);
+		//m_menuItemTitle.setContent(title);
 	};
 
 
@@ -158,7 +159,12 @@ namespace sdds {
 
 		return selectedItem;
 	}
-
+	/*
+	XXXXXXOOOOOOOOOOOO
+	01234567890123456
+	
+	
+	*/
 	int Menu::operator~() {
 	
 		int selectedItem;
@@ -172,17 +178,16 @@ namespace sdds {
 
 	Menu& Menu::operator<<(const char* menuitemConent) {
 	
-		if (m_arrOfMenuPointers[m_noMenuPointers + 1] < MAX_MENU_ITEMS)
+		if (m_noMenuPointers < MAX_MENU_ITEMS)
 		{
-			MenuItem newMenuItem(menuitemConent);
-			//MenuItem* newMenuItem = nullptr;
-			//newMenuItem = new MenuItem{ menuitemConent};
-
-			//m_arrOfMenuPointers[m_noMenuPointers + 1] = newMenuItem;
+			MenuItem* newMenuItem =  new MenuItem(menuitemConent);
+			//	MenuItem* newMenuItem = nullptr;
+			//newMenuItem = new MenuItem{};
+		
+			m_arrOfMenuPointers[m_noMenuPointers] = newMenuItem ;
 
 			m_noMenuPointers++;
 		}
-		
 		
 		return *this;
 	};

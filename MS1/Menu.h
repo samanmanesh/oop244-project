@@ -4,6 +4,7 @@
 namespace sdds {
 	class Menu;
 	const unsigned int  MAX_MENU_ITEMS = 20;
+//cnst  int  MAX_MENU_ITEMS = 20;
 
 	class MenuItem
 	{
@@ -37,9 +38,9 @@ namespace sdds {
 
 		MenuItem m_menuItemTitle;
 
-		MenuItem* m_arrOfMenuPointers{};
+		MenuItem* m_arrOfMenuPointers[MAX_MENU_ITEMS]{ };
 
-		int m_noMenuPointers;
+		unsigned int m_noMenuPointers{};
 		
 	public:
 
