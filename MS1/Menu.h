@@ -63,6 +63,8 @@ namespace sdds {
 		int getInt(int minRange, int maxRange, const char* errorMessage);
 
 		int run();
+
+		int operator~();
 	};
 
 }

@@ -159,6 +159,17 @@ namespace sdds {
 		return selectedItem;
 	}
 
+	int Menu::operator~() {
+	
+		int selectedItem;
+
+		displayMenu();
+
+		selectedItem = getInt(0, MAX_MENU_ITEMS, "Invalid Selection, try again: ");
+
+		return selectedItem;
+	};
+
 
 
 }
