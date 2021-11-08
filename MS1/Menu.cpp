@@ -197,5 +197,17 @@ namespace sdds {
 		return m_noMenuPointers;
 	};
 
+	Menu::operator bool() {
+	
+		return(m_noMenuPointers);
+	}
+
+	// to be checked
+	ostream& Menu::operator<<(ostream& ostr) {
+		 m_menuItemTitle.display();
+		return ostr;
+	};
+	
+
 
 }

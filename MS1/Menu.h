@@ -71,6 +71,10 @@ namespace sdds {
 
 		 operator int();
 		 operator unsigned int();
+
+		 operator bool();
+
+		 std::ostream& operator<<(std::ostream& ostr=std::cout);
 	};
 
 }
