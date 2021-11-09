@@ -14,15 +14,6 @@ namespace sdds {
 
 	MenuItem::MenuItem(const char* content) {
 
-		/*if (content && content[0])
-		{
-			m_contentOfMenu = new char[strlen(content) + 1];
-			strcpy(m_contentOfMenu, content);
-		}
-		else
-		{
-			setEmpty();
-		}*/
 		setContent(content);
 	}
 
@@ -74,7 +65,7 @@ namespace sdds {
 
 	Menu::Menu(const char* title) :m_menuItemTitle(title) {
 
-		//m_menuItemTitle.setContent(title);
+
 	};
 
 
@@ -83,7 +74,7 @@ namespace sdds {
 		for (int i = 0; i < MAX_MENU_ITEMS; i++)
 		{
 			//check  Am not sure
-			delete[] m_arrOfMenuPointers[i];
+			delete m_arrOfMenuPointers[i];
 		}
 
 	};
@@ -111,13 +102,17 @@ namespace sdds {
 			ostr.setf(ios::right);
 			ostr << i + 1 << "- ";
 			ostr.unsetf(ios::right);
-			ostr << m_arrOfMenuPointers[i];
+			m_arrOfMenuPointers[i]->display(ostr);
+			ostr << endl;
 		}
 		ostr << " 0- Exit" << endl;
 		ostr << "> ";
 
 		return ostr;
 	}
+
+
+
 
 	// the fuction shoud move to Util when it works properly 
 	int Menu::getInt(int minRange, int maxRange, const char* errorMessage) {
@@ -128,7 +123,7 @@ namespace sdds {
 			cin >> selectedItem;
 			if (!cin.fail())
 			{
-				if (selectedItem > minRange && selectedItem < maxRange)
+				if (selectedItem >= minRange && selectedItem < maxRange)
 				{
 					trueInt = true;
 				}
@@ -197,28 +192,17 @@ namespace sdds {
 		return(m_noMenuPointers);
 	}
 
-	/*ostream& Menu::display(ostream& ostr) {
-		m_menuItemTitle.display();
-		return ostr;
-	}*/
-	//to be checked
-   /*ostream& Menu::operator<<(ostream& ostr) {
-		m_menuItemTitle.display();
-	   return ostr;
-   };*/
-
 	const char* Menu:: operator[](unsigned int index) const {
 
 		if (index > m_noMenuPointers)
 		{
-			return(m_arrOfMenuPointers[index % m_noMenuPointers]->m_contentOfMenu);
+			return(m_arrOfMenuPointers[index %= m_noMenuPointers]->m_contentOfMenu);
 		}
 
 		return(m_arrOfMenuPointers[index]->m_contentOfMenu);
 
 	}
-
-	// need to be check 
+ 
 	ostream& operator<<(ostream& ostr, Menu& RO) {
 		return(RO.displayTitleMenu(ostr));
 	};
