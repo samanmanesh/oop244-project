@@ -105,7 +105,7 @@ namespace sdds {
 			m_menuItemTitle.display();
 			ostr << ":" << endl;
 		}
-		for (int i = 0; i < m_noMenuPointers; i++)
+		for ( unsigned int i = 0; i < m_noMenuPointers; i++)
 		{
 			ostr.width(2);
 			ostr.setf(ios::right);
@@ -202,21 +202,25 @@ namespace sdds {
 		return(m_noMenuPointers);
 	}
 
-	// to be checked
+	 //to be checked
 	ostream& Menu::operator<<(ostream& ostr) {
 		 m_menuItemTitle.display();
 		return ostr;
 	};
 	
-	const char* Menu:: operator[](int index) const{
+	const char* Menu:: operator[](unsigned int index) const{
 		
 		if (index > m_noMenuPointers)
 		{
-			return;
+			return(m_arrOfMenuPointers[index % m_noMenuPointers]->m_contentOfMenu);
 		}
 
 		return(m_arrOfMenuPointers[index]->m_contentOfMenu);
 	
 	}
 
+	// need to be check 
+	ostream& operator<<(ostream& ostr, const Menu& RO) {
+		return(ostr << RO);
+	};
 }

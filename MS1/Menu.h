@@ -76,8 +76,8 @@ namespace sdds {
 
 		 std::ostream& operator<<(std::ostream& ostr );
 
-		 const char* operator[](int index) const;
+		 const char* operator[](unsigned int index) const;
 	};
-
+	std::ostream& operator<<(std::ostream& ostr, const Menu& RO);
 }
 #endif
