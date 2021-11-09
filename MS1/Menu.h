@@ -1,33 +1,52 @@
+/* Citation and Sources...
+Final Project Milestone 1
+Module: Menu
+Filename: Menu.h
+Version 1.0
+Author	Mohammadhossein Sobhanmanesh
+Revision History
+-----------------------------------------------------------
+Date      Reason
+2020/11/9  Preliminary release
+2020/11/9  Debugged DMA
+-----------------------------------------------------------
+I have done all the coding by myself and only copied the code
+that my professor provided to complete my workshops and assignments.
+-----------------------------------------------------------*/
+
+
+
+
 #ifndef SDDS_MENU_H
 #define SDDS_MENU_H
 #include <iostream>
 namespace sdds {
 	class Menu;
 	const unsigned int  MAX_MENU_ITEMS = 20;
-//cnst  int  MAX_MENU_ITEMS = 20;
+
 
 	class MenuItem
 	{
-			
+
 		char* m_contentOfMenu{};
-		
+
 		MenuItem();
 
 		MenuItem(const char* content);
 
 		MenuItem(const MenuItem& MI) = delete;
-		
+
 		void operator= (const MenuItem& MI) = delete;
-		
+
 		~MenuItem();
-		
+
 		void setContent(const char* content);
 
 		void setEmpty();
-		
+
 		operator bool() const;
-		
-		operator const char*() const;
+
+		operator const char* () const;
 
 		std::ostream& display(std::ostream& ostr = std::cout);
 
@@ -41,7 +60,7 @@ namespace sdds {
 		MenuItem* m_arrOfMenuPointers[MAX_MENU_ITEMS]{ };
 
 		unsigned int m_noMenuPointers{};
-		
+
 	public:
 
 		Menu();
@@ -54,15 +73,9 @@ namespace sdds {
 
 		~Menu();
 
-		//std::ostream&
-		//void displayTitleMenu( std::ostream& ostr = std::cout);
-		
-		//void displayTitleMenu();
 		std::ostream& displayTitleMenu(std::ostream& ostr);
 
 		std::ostream& displayMenu(std::ostream& ostr = std::cout);
-
-		int getInt(int minRange, int maxRange, const char* errorMessage);
 
 		int run();
 
@@ -70,16 +83,12 @@ namespace sdds {
 
 		Menu& operator<<(const char* menuitemConent);
 
-		 operator int();
-		 operator unsigned int();
+		operator int();
+		operator unsigned int();
 
-		 operator bool();
+		operator bool();
 
-		 //std::ostream& operator<<(std::ostream& ostr );
-
-		 //std::ostream& display(std::ostream& ostr);
-
-		 const char* operator[](unsigned int index) const;
+		const char* operator[](unsigned int index) const;
 	};
 	std::ostream& operator<<(std::ostream& ostr, Menu& RO);
 }

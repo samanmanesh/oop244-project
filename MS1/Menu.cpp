@@ -1,7 +1,25 @@
+/* Citation and Sources...
+Final Project Milestone 1
+Module: Menu
+Filename: Menu.cpp
+Version 1.0
+Author	Mohammadhossein Sobhanmanesh
+Revision History
+-----------------------------------------------------------
+Date      Reason
+2020/11/9  Preliminary release
+2020/11/9  Debugged DMA
+-----------------------------------------------------------
+I have done all the coding by myself and only copied the code
+that my professor provided to complete my workshops and assignments.
+-----------------------------------------------------------*/
+
+
 #define  _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <cstring>
 #include"Menu.h"
+#include"Utils.h"
 using namespace std;
 using namespace sdds;
 
@@ -73,7 +91,6 @@ namespace sdds {
 
 		for (int i = 0; i < MAX_MENU_ITEMS; i++)
 		{
-			//check  Am not sure
 			delete m_arrOfMenuPointers[i];
 		}
 
@@ -111,52 +128,6 @@ namespace sdds {
 		return ostr;
 	}
 
-
-
-
-	// the fuction shoud move to Util when it works properly 
-	int Menu::getInt(int minRange, int maxRange, const char* errorMessage) {
-		int selectedItem = 0;
-		bool trueInt = false;
-		while (trueInt == false)
-		{
-			cin >> selectedItem;
-			if (cin.fail() || selectedItem < minRange || selectedItem > maxRange)
-			{
-				cout << errorMessage;
-				cin.clear();
-				cin.ignore(1000, '\n');
-				trueInt = false;
-			}
-			else
-			{
-				trueInt = true;
-			}
-			
-			/*if (!cin.fail())
-			{
-
-				
-
-				if (selectedItem >= minRange && selectedItem < maxRange)
-				{
-					trueInt = true;
-				}
-				else
-				{
-					cout << errorMessage;
-					cin.clear();
-					cin.ignore(1000, '\n');
-				}
-			}
-			else
-			{
-				cin.clear();
-				cin.ignore(1000, '\n');
-			}*/
-		}
-		return selectedItem;
-	};
 
 	int Menu::run() {
 
