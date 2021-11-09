@@ -57,7 +57,8 @@ namespace sdds {
 		//std::ostream&
 		//void displayTitleMenu( std::ostream& ostr = std::cout);
 		
-		void displayTitleMenu();
+		//void displayTitleMenu();
+		std::ostream& displayTitleMenu(std::ostream& ostr);
 
 		std::ostream& displayMenu(std::ostream& ostr = std::cout);
 
@@ -74,10 +75,12 @@ namespace sdds {
 
 		 operator bool();
 
-		 std::ostream& operator<<(std::ostream& ostr );
+		 //std::ostream& operator<<(std::ostream& ostr );
+
+		 //std::ostream& display(std::ostream& ostr);
 
 		 const char* operator[](unsigned int index) const;
 	};
-	std::ostream& operator<<(std::ostream& ostr, const Menu& RO);
+	std::ostream& operator<<(std::ostream& ostr, Menu& RO);
 }
 #endif
