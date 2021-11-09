@@ -68,14 +68,14 @@ namespace sdds {
 
 		std::ostream& write(std::ostream& os = std::cout)const;
 
-		bool operator==(Date& RO)const;
-		bool operator!=(Date& RO)const;
-		bool operator>=(Date& RO)const;
-		bool operator<=(Date& RO)const;
-		bool operator<(Date& RO)const;
-		bool operator>(Date& RO)const;
+		bool operator==(const  Date& RO)const;
+		bool operator!=(const  Date& RO)const;
+		bool operator>=(const  Date& RO)const;
+		bool operator<=(const  Date& RO)const;
+		bool operator<(const  Date& RO)const;
+		bool operator>(const  Date& RO)const;
 
-		int operator-(Date& RO)const;
+		int operator-(const  Date& RO)const;
 
 		operator bool() const;
 	};
