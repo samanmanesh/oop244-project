@@ -118,11 +118,26 @@ namespace sdds {
 	int Menu::getInt(int minRange, int maxRange, const char* errorMessage) {
 		int selectedItem = 0;
 		bool trueInt = false;
-		while (!trueInt)
+		while (trueInt == false)
 		{
 			cin >> selectedItem;
-			if (!cin.fail())
+			if (cin.fail() || selectedItem < minRange || selectedItem > maxRange)
 			{
+				cout << errorMessage;
+				cin.clear();
+				cin.ignore(1000, '\n');
+				trueInt = false;
+			}
+			else
+			{
+				trueInt = true;
+			}
+			
+			/*if (!cin.fail())
+			{
+
+				
+
 				if (selectedItem >= minRange && selectedItem < maxRange)
 				{
 					trueInt = true;
@@ -130,13 +145,15 @@ namespace sdds {
 				else
 				{
 					cout << errorMessage;
+					cin.clear();
+					cin.ignore(1000, '\n');
 				}
 			}
 			else
 			{
 				cin.clear();
 				cin.ignore(1000, '\n');
-			}
+			}*/
 		}
 		return selectedItem;
 	};
@@ -147,7 +164,7 @@ namespace sdds {
 
 		displayMenu();
 
-		selectedItem = getInt(0, MAX_MENU_ITEMS, "Invalid Selection, try again: ");
+		selectedItem = getInt(0, m_noMenuPointers, "Invalid Selection, try again: ");
 
 		return selectedItem;
 	}
@@ -158,7 +175,7 @@ namespace sdds {
 
 		displayMenu();
 
-		selectedItem = getInt(0, MAX_MENU_ITEMS, "Invalid Selection, try again: ");
+		selectedItem = getInt(0, m_noMenuPointers, "Invalid Selection, try again: ");
 
 		return selectedItem;
 	};
