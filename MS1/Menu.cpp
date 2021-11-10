@@ -89,7 +89,7 @@ namespace sdds {
 
 	Menu::~Menu() {
 
-		for (int i = 0; i < MAX_MENU_ITEMS; i++)
+		for (unsigned int i = 0; i < MAX_MENU_ITEMS; i++)
 		{
 			delete m_arrOfMenuPointers[i];
 		}
