@@ -117,6 +117,7 @@ namespace sdds {
 		{
 			ostr.width(2);
 			ostr.setf(ios::right);
+			ostr.fill(' ');
 			ostr << i + 1 << "- ";
 			ostr.unsetf(ios::right);
 			m_arrOfMenuPointers[i]->display(ostr);
