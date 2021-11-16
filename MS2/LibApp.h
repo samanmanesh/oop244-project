@@ -10,7 +10,7 @@ namespace sdds {
 		Menu m_exitMenu;
 
 		bool confirm(const char* message);
-		
+
 		void load();  // prints: "Loading Data"<NEWLINE>
 		void save();  // prints: "Saving Data"<NEWLINE>
 		void search();  // prints: "Searching for publication"<NEWLINE>
@@ -24,12 +24,16 @@ namespace sdds {
 
 		void removePublication();
 
+		void checkOutPub();
+
 	public:
 
 		LibApp();
 		~LibApp();
 	};
+
 	
+
 	
 
 
