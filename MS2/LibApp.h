@@ -10,7 +10,16 @@ namespace sdds {
 		Menu m_exitMenu;
 
 		bool confirm(const char* message);
+		
+		void load();  // prints: "Loading Data"<NEWLINE>
+		void save();  // prints: "Saving Data"<NEWLINE>
+		void search();  // prints: "Searching for publication"<NEWLINE>
 
+		void returnPub();  /*  Calls the search() method.
+							   prints "Returning publication"<NEWLINE>
+							   prints "Publication returned"<NEWLINE>
+							   sets m_changed to true;
+						   */
 
 	public:
 
@@ -20,25 +29,7 @@ namespace sdds {
 
 	};
 
-	LibApp::LibApp() :m_changed(false), m_mainMenu("Seneca Libray Application"
-	) {
-		m_mainMenu << "Add New Publication" << "Remove Publication" << "Checkout publication from library" << "Return publication to library";
-
-	  };
-
-	bool LibApp::confirm(const char* message) {
-		bool result = false;
-		int returnedValue = 0;
-		
-		Menu confirmMenu(message);
-		confirmMenu << "yes";
-
-		returnedValue = confirmMenu.run();
-		returnedValue == 1 && (result = true);
-		return result;
-	};
-
-
+	
 }
 #endif // !SDDS_LIBAPP_H
 
