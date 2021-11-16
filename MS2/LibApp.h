@@ -26,11 +26,12 @@ namespace sdds {
 
 		void checkOutPub();
 
-		void run();
+	
 	public:
 
 		LibApp();
 		~LibApp();
+		void run();
 	};
 
 	

@@ -112,6 +112,7 @@ namespace sdds {
 		{
 			m_menuItemTitle.display();
 			//ostr << ":" << endl;
+			ostr << endl;
 		}
 		for (unsigned int i = 0; i < m_noMenuPointers; i++)
 		{

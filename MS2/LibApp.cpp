@@ -88,7 +88,7 @@ namespace sdds {
 		
 		while (returnedValue != 0)
 		{
-			m_mainMenu.displayMenu();
+			//m_mainMenu.displayMenu();
 			returnedValue = m_mainMenu.run();
 			if (returnedValue == 1)
 			{
@@ -119,14 +119,20 @@ namespace sdds {
 				}
 				else if (result == 2) {
 
-					returnedValue = m_mainMenu.run();
+					//returnedValue = m_mainMenu.run();
+					returnedValue = 1; // to return to main menu again
 				}
 				else if (result == 0)
 				{
-					if (!confirm("This will discard all the changes are you sure?")) {
+					if (confirm("This will discard all the changes are you sure?")) {
 
-						returnedValue = m_mainMenu.run();
-					};
+						m_changed = false;
+						
+					}
+					//else
+					//{
+					//	//returnedValue = m_mainMenu.run();
+					//};
 				}
 			}
 		}
