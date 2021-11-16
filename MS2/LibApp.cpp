@@ -24,7 +24,7 @@ using namespace sdds;
 namespace sdds {
 
 
-	LibApp::LibApp() :m_changed(false), m_mainMenu("Seneca Libray Application"
+	LibApp::LibApp() :m_changed(false), m_mainMenu("Seneca Library Application"
 	), m_exitMenu("Changes have been made to the data, what would you like to do?") {
 		m_mainMenu << "Add New Publication" << "Remove Publication" << "Checkout publication from library" << "Return publication to library";
 		;
