@@ -1,3 +1,18 @@
+/* Citation and Sources...
+Final Project Milestone 2
+Module: LibApp
+Filename: LibApp.cpp
+Version 1.0
+Author	Mohammadhossein Sobhanmanesh
+Revision History
+-----------------------------------------------------------
+Date      Reason
+2020/11/16  Preliminary release
+2020/11/16  Debugged DMA
+-----------------------------------------------------------
+I have done all the coding by myself and only copied the code
+that my professor provided to complete my workshops and assignments.
+-----------------------------------------------------------*/
 #define  _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <cstring>
@@ -7,7 +22,7 @@ using namespace std;
 using namespace sdds;
 
 namespace sdds {
-   
+
 
 	LibApp::LibApp() :m_changed(false), m_mainMenu("Seneca Libray Application"
 	), m_exitMenu("Changes have been made to the data, what would you like to do?") {
@@ -36,14 +51,14 @@ namespace sdds {
 	};
 
 	void LibApp::save() {
-		cout << "Saving Data"  <<endl;
-	};  
+		cout << "Saving Data" << endl;
+	};
 
 	void LibApp::search() {
 		cout << "Searching for publication" << endl;
-	};  
+	};
 
-	void LibApp:: returnPub() {
+	void LibApp::returnPub() {
 		search();
 		cout << "Returning publication" << endl;
 		cout << "Publication returned" << endl;
@@ -54,7 +69,7 @@ namespace sdds {
 
 	void LibApp::newPublication() {
 		cout << "Adding new publication to library" << endl;
-		
+
 		if (confirm("Add this publication to library?"))
 		{
 			m_changed = true;
@@ -65,7 +80,7 @@ namespace sdds {
 	void LibApp::removePublication() {
 		cout << "Removing publication from library" << endl;
 		search();
-		
+
 		if (confirm("Remove this publication from the library?")) {
 
 			m_changed = true;
@@ -85,10 +100,9 @@ namespace sdds {
 
 	void LibApp::run() {
 		unsigned int returnedValue = 1;
-		
+
 		while (returnedValue != 0)
 		{
-			//m_mainMenu.displayMenu();
 			returnedValue = m_mainMenu.run();
 			if (returnedValue == 1)
 			{
@@ -119,7 +133,7 @@ namespace sdds {
 				}
 				else if (result == 2) {
 
-					//returnedValue = m_mainMenu.run();
+
 					returnedValue = 1; // to return to main menu again
 				}
 				else if (result == 0)
@@ -127,17 +141,13 @@ namespace sdds {
 					if (confirm("This will discard all the changes are you sure?")) {
 
 						m_changed = false;
-						
+
 					}
-					//else
-					//{
-					//	//returnedValue = m_mainMenu.run();
-					//};
 				}
 			}
 		}
 		cout << "-------------------------------------------" << endl;
-		cout <<"Thanks for using Seneca Library Application"<< endl;
+		cout << "Thanks for using Seneca Library Application" << endl;
 
 	};
 
