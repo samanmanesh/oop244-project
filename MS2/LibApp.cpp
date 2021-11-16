@@ -37,7 +37,7 @@ namespace sdds {
 		int returnedValue = 0;
 
 		Menu confirmMenu(message);
-		confirmMenu << "yes";
+		confirmMenu << "Yes";
 
 		returnedValue = confirmMenu.run();
 
@@ -90,7 +90,7 @@ namespace sdds {
 
 	void LibApp::checkOutPub() {
 		search();
-		if (confirm("Check out publication ? ")) {
+		if (confirm("Check out publication?")) {
 
 			m_changed = true;
 			cout << "Publication checked out" << endl;
@@ -145,6 +145,7 @@ namespace sdds {
 					}
 				}
 			}
+			cout << endl;
 		}
 		cout << "-------------------------------------------" << endl;
 		cout << "Thanks for using Seneca Library Application" << endl;
