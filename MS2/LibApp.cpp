@@ -47,4 +47,19 @@ namespace sdds {
 		cout << "Publication returned" << endl;
 		m_changed = true;
 	};
+
+	LibApp::~LibApp() {};
+
+	void LibApp::newPublication() {
+		bool result = false;
+		cout << "Adding new publication to library" << endl;
+		result = confirm("Add this publication to library?");
+		if (result)
+		{
+			m_changed = true;
+			cout << "Publication added" << endl;
+		}
+	};
+
+
 }

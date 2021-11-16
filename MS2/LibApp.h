@@ -20,16 +20,16 @@ namespace sdds {
 							   prints "Publication returned"<NEWLINE>
 							   sets m_changed to true;
 						   */
+		void newPublication();
 
 	public:
 
 		LibApp();
-
-
-
+		~LibApp();
 	};
-
 	
+	
+
 }
 #endif // !SDDS_LIBAPP_H
 
