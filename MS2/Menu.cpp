@@ -138,7 +138,7 @@ namespace sdds {
 		displayMenu();
 
 		selectedItem = getInt(0, m_noMenuPointers, "Invalid Selection, try again: ");
-
+		cout << endl; 
 		return selectedItem;
 	}
 
