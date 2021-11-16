@@ -9,6 +9,9 @@ namespace sdds {
 		Menu m_mainMenu;
 		Menu m_exitMenu;
 
+		bool confirm(const char* message);
+
+
 	public:
 
 		LibApp();
@@ -21,6 +24,18 @@ namespace sdds {
 	) {
 		m_mainMenu << "Add New Publication" << "Remove Publication" << "Checkout publication from library" << "Return publication to library";
 
+	  };
+
+	bool LibApp::confirm(const char* message) {
+		bool result = false;
+		int returnedValue = 0;
+		
+		Menu confirmMenu(message);
+		confirmMenu << "yes";
+
+		returnedValue = confirmMenu.run();
+		returnedValue == 1 && (result = true);
+		return result;
 	};
 
 
