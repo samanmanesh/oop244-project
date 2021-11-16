@@ -26,6 +26,7 @@ namespace sdds {
 
 		void checkOutPub();
 
+		void run();
 	public:
 
 		LibApp();
@@ -33,7 +34,6 @@ namespace sdds {
 	};
 
 	
-
 	
 
 

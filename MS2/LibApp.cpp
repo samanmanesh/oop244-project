@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstring>
 #include "LibApp.h"
+#include"Utils.h"
 using namespace std;
 using namespace sdds;
 
@@ -9,8 +10,10 @@ namespace sdds {
    
 
 	LibApp::LibApp() :m_changed(false), m_mainMenu("Seneca Libray Application"
-	) {
+	), m_exitMenu("Changes have been made to the data, what would you like to do?") {
 		m_mainMenu << "Add New Publication" << "Remove Publication" << "Checkout publication from library" << "Return publication to library";
+		;
+		m_exitMenu << "Save changes and exit" << "Cancel and go back to the main menu";
 		load();
 	};
 
@@ -77,6 +80,59 @@ namespace sdds {
 			m_changed = true;
 			cout << "Publication checked out" << endl;
 		}
+	};
+
+
+	void LibApp::run() {
+		unsigned int returnedValue = 1;
+		
+		while (returnedValue != 0)
+		{
+			m_mainMenu.displayMenu();
+			returnedValue = m_mainMenu.run();
+			if (returnedValue == 1)
+			{
+				newPublication();
+			}
+			else if (returnedValue == 2) {
+
+				removePublication();
+			}
+			else if (returnedValue == 3)
+			{
+				checkOutPub();
+			}
+			else if (returnedValue == 4)
+			{
+				returnPub();
+			}
+
+
+			//for exitMenu when user select 0 in mainMenu 
+			if (returnedValue == 0 && m_changed == true)
+			{
+				int result = 0;
+				result = m_exitMenu.run();
+				if (result == 1)
+				{
+					save();
+				}
+				else if (result == 2) {
+
+					returnedValue = m_mainMenu.run();
+				}
+				else if (result == 0)
+				{
+					if (!confirm("This will discard all the changes are you sure?")) {
+
+						returnedValue = m_mainMenu.run();
+					};
+				}
+			}
+		}
+		cout << "-------------------------------------------" << endl;
+		cout <<"Thanks for using Seneca Library Application"<< endl;
+
 	};
 
 
