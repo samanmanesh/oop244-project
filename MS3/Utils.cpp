@@ -22,9 +22,9 @@ that my professor provided to complete my workshops and assignments.
 using namespace std;
 using namespace sdds;
 namespace sdds {
-
-
-	int getInt(int minRange, int maxRange, const char* errorMessage) {
+		
+	
+	int Utils::getInt(int minRange, int maxRange, const char* errorMessage) {
 		int selectedItem = 0;
 		bool trueInt = false;
 		while (trueInt == false)

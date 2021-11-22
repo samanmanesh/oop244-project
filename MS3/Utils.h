@@ -19,6 +19,13 @@ that my professor provided to complete my workshops and assignments.
 #define SDDS_UTILS_H__
 
 namespace sdds {
-	int getInt(int minRange, int maxRange, const char* errorMessage);
+
+	class Utils
+	{
+	public:
+
+		int static getInt(int minRange, int maxRange, const char* errorMessage);
+
+	};
 }
 #endif // SDDS_UTILS_H__
