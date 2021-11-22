@@ -1,13 +1,17 @@
 # Project: Seneca Library Application
-MS1: Version 1.1 (Overview session video posted)
 
 ### Milestones
 
 |Milestone| Revision |  Overview<br />session |Comments |
 |------|:---:|:---:|:----|
-| [MS1](#milestone-1) | V1.0 | [Watch](https://www.youtube.com/watch?v=3-79kO4dSj0) |intitial post | 
-| MS2 |  |  |  |
-| MS3 |  |  | |
+| [MS1](#milestone-1) | V1.1 | [Watch](https://www.youtube.com/watch?v=3-79kO4dSj0) |Overview session video posted |
+| [MS2](#milestone-2) | [V1.1](#ms2-v11) |  | Removed call to search method for **newPublictation()** |
+| --- |[V1.2](#citation-sources) |  |Revision History Explanation |
+| --- | V1.3 |  |Fixed output typo: "Libray -> Library" |
+| --- | V1.4 |  |Due date extended by one day to Nov 15 |
+| [MS3](#milestone-3) | V1.0  | [Watch](https://www.youtube.com/watch?v=kNpuE3wMETQ) | Initial Post |
+| --- | [V1.1](#ms3-v11) | | corrected zero to empty string |
+| --- | [V1.1.1](#ms3-v111) | | Added output sample for membership being 0  |
 | MS4 |  |  | |
 | MS5<br />(Final Milestone) | | ||
 
@@ -24,8 +28,8 @@ This project will be done in 5 milestones and each milestone will have its due d
 |Milestone| Mark | Due date | Submission Policy|
 |:------:|:---:|:---:|-------|
 | MS1 | 10% | Nov 9th | gets full mark even if 1 week late. gets 0% afterwards|
-| MS2 | 10% | TBA | gets full mark even if 1 week late. gets 0% afterwards|
-| MS3 | 10% | TBA | gets full mark even if 1 week late. gets 0% afterwards|
+| MS2 | 10% | Nov 15th | gets full mark even if 1 week late. gets 0% afterwards|
+| MS3 | 10% | Nov 22nd | gets full mark even if 1 week late. gets 0% afterwards|
 | MS4 | 10% | TBA  | gets full mark even if 1 week late. gets 0% afterwards|
 | MS5 (Final Milestone) | 60% | Dec 5th| 10% penalty for each day being late up to 5 days|
 
@@ -44,6 +48,8 @@ You can check the due date of each milestone using the ```-due``` flag in the su
 ## Citation, Sources
 
 When submitting your work, all the files submitted should carry full student information along with the "citation and sources" information. See the following example:
+
+If you have multiple submissions of the same milestone, please update the Revision History in each submission so your professor knows what changes to look for.
 
 ```C++
 /* Citation and Sources...
@@ -751,8 +757,705 @@ and follow the instructions.
 
 ## [Back to milestones](#milestones)
 
+# Milestone 2
+## The Seneca Library Application Module
+Your task for milestone 2 is to build a mockup application for the Seneca Library Application in a module called LibApp. 
+
+The **LibApp** class demos the execution of the Seneca Library Application with printing messages instead of actually doing the tasks.
+
+Later these messages are replaced with actual working modules to make the application functional. 
+
+Creating a mockup application before developing the main program helps to understand the entire system and also demonstrates the execution of the program to the client before the application is fully developed.
+
+You are going to use the Menu Module in this milestone. 
+### Modules (files) included in this milestone:
+```Text
+Utils.cpp
+Utils.h
+Menu.cpp
+Menu.h
+LibApp.cpp
+LibApp.h
+ms2_tester.cpp
+```
+Before starting the milestone you have to make a minor modification to the title of the Menu class: 
+
+> *Remove the colon **(":")** character after displaying the title of the Menu*
+#### MS1 MENU:
+```Text
+Lunch Menu:
+ 1- Omelet
+ 2- Tuna Sandwich
+ 3- California Rolls
+ 0- Exit
+ > 
+```
+#### MS2 Menu:
+```Text
+Lunch Menu
+ 1- Omelet
+ 2- Tuna Sandwich
+ 3- California Rolls
+ 0- Exit
+ > 
+```
+
+> Note: these types of modifications to previously written code are very common to accommodate newly developed logic.
+
+## The LibApp Module
+
+create a class called **LibApp** with following attributes:
+
+### LibApp Attributes
+```C++
+      bool m_changed;
+      Menu m_mainMenu;
+      Menu m_exitMenu;
+```
+
+#### `m_changed`
+A flag to keep track of changes made to the application data. This flag is initially set to false. If any change is made to the data of the application, this flag is set to true. 
+
+Doing so, when exiting the program, we can warn the user and ask if they like the changes to be saved or discarded.
+
+#### `m_mainMenu`
+This menu will be used as the main menu of the application and should be initialized with the following title:
+```text
+"Seneca Libray Application"
+```
+and then populated with the following menu items:
+```text
+"Add New Publication"
+"Remove Publication"
+"Checkout publication from library"
+"Return publication to library"
+```
+
+#### `m_exitMenu`
+This menu will be used when exiting the program if any changes are made to the data. This menu should be initialized with the following title:
+```text
+"Changes have been made to the data, what would you like to do?"
+```
+and then populated with the following menu items:
+```text
+"Save changes and exit"
+"Cancel and go back to the main menu"
+```
+
+### Private Methods
+```C++
+bool confirm(const char* message);
+```
+Instantiate a **Menu** in this function and initialize it with the **message** argument.
+
+Then add only a `"yes"` as a single menu item to the Menu.  
+
+Finally, run the menu and return true if the run method of Menu returns 1 and otherwise this function returns false.
+#### Simple private fuctions:
+```C++
+      void load();  // prints: "Loading Data"<NEWLINE>
+      void save();  // prints: "Saving Data"<NEWLINE>
+      void search();  // prints: "Searching for publication"<NEWLINE>
+      
+      void returnPub();  /*  Calls the search() method.
+                             prints "Returning publication"<NEWLINE>
+                             prints "Publication returned"<NEWLINE>
+                             sets m_changed to true;
+                         */
+```
+#### Methods with confirmation
+```C++
+void newPublication();
+```
+#### MS2 V1.1
+prints `"Adding new publication to library"`+newline<br />
+~~calls the search method~~ MS2-1.1  <br />
+calls the confirm method with `"Add this publication to library?"`<br />
+if confrim returns true, it will set `m_changed` to true and prints `"Publication added"` + newline<br />
+```C++
+void removePublication();
+```
+prints `"Removing publication from library"`+newline<br />
+calls the search method<br />
+calls the confirm method with `"Remove this publication from the library?"`<br />
+if confrim returns true, it will set `m_changed` to true and prints `"Publication removed"` + newline<br />
+```C++
+void checkOutPub();
+```
+calls the search method<br />
+calls the confirm method with `Check out publication?"`<br />
+if confrim returns true, it will set `m_changed` to true and prints `"Publication checked out"` + newline<br />
+
+## Constructor
+Constructor should initialize and set the attributes and load the publication records from database
+- Initializes the attributes (see the attribute section)
+- populates the Menu attributes
+- calls the `load()`` method
+## MS2 Submission and the due date
+
+## The run method
+
+The run method is the main application driver.
+
+It displays the main menu and based on the user's selection calls the corresponding private method and repeats the above until the user chooses to exit.
+
+When the user selects exit, the value of `m_changed` is examined. 
+If the value is false, then since the data of the application is not modified, the program terminates.
+
+If the value is true, the `m_exitMenu` is used by calling its run method. Doing so the user has the selection of saving and exiting, cancelling and going back to the main menu or exiting without saving. 
+
+If the first one is selected, the `save()` method is called and the program terminates.
+
+If the second one is selected the program goes back to the main menu and execution continues.
+
+If the exit is selected, then the confirm menu will be called using the message: `"This will discard all the changes are you sure?"`.  If the user selects **Yes**, the program terminates. Otherwise, the program goes back to the main menu and execution resumes.
 
 
+When the program is terminated, the following message is printed:
+```Text
+-------------------------------------------
+Thanks for using Seneca Library Application
+```
+
+### suggested pseudo code:
+```text
+loop until done
+    display menu
+    if first option  new publication otherwise
+    if second option remove publication otherwise
+    if third option checkout otherwise
+    if fourth option return publication otherwise 
+        if changed
+           Warning menu and choices
+           if save selected save and its done otherwise
+           if discard selected 
+              final confirmation for exit 
+              if exit selected 
+                 its done (no saving)   
+              end if
+           end if
+        otherwise (no change)
+           it is done          
+        end if
+    end if
+end loop        
+goodbye message
+```
+
+## Tester program
+```C++
+// Final Project Milestone 2
+// LibApp Mockup Module
+// File	ms2_tester.cpp
+// Version 1.0
+// Author	Fardad Soleimanloo
+// Revision History
+// -----------------------------------------------------------
+// Name               Date                 Reason
+// Fardad             2021/11/09		       Preliminary release
+/////////////////////////////////////////////////////////////////
+#include <iostream>
+#include "LibApp.h"
+using namespace std;
+int main() {
+   sdds::LibApp theApp;
+   cout << endl << "Testing exiting with no change:" << endl;
+   theApp.run();
+   cout << endl << "Testing exiting with change and discarding data:" << endl;
+   theApp.run();
+   cout << endl << "Testing exiting with change and saving data:" << endl;
+   theApp.run();
+   cout << endl << "Testing all actions:" << endl;
+   theApp.run();
+   return 0;
+}
+/* data to be entered for testing:
+ 1- 1
+ 2- 0
+ 3- 0
+ 4- 2
+ 5- 1
+ 6- 0
+ 7- 0
+ 8- 1
+ 9- 3
+10- 1
+11- 0
+12- 1
+13- 4
+14- 0
+15- 2
+16- 0
+17- 1
+*/
+```
+## output
+
+[MS2 Output](ms2_output.md)
+
+
+## MS2 Submission and the due date
+
+
+> If you would like to successfully complete the project and be on time, **start early** and try to meet all the due dates of the milestones.
+
+
+Upload your source code and the tester program (**Utils.cpp, Utils.h, Menu.cpp, Menu.h, LibApp.cpp, LibApp.h and ms2_tester.cpp**) to your `matrix` account. Compile and run your code using the `g++` compiler [as shown in the introduction](#compiling-and-testing-your-program) and make sure that everything works properly.
+
+Then, run the following command from your account (replace `profname.proflastname` with your professor’s Seneca userid):
+```
+~profname.proflastname/submit 2??/prj/m2
+```
+and follow the instructions.
+
+- *2??* is replaced with your subject code
+
+
+### The submit program's options:
+```bash
+~prof_name.prof_lastname/submit DeliverableName [-submission options]<ENTER>
+[-submission option] acceptable values:
+  "-due":
+       Shows due dates only
+       This option cannot be used in combination with any other option.
+  "-skip_spaces":
+       Do the submission regardless of incorrect horizontal spacing.
+       This option may attract penalty.
+  "-skip_blank_lines":
+       Do the submission regardless of incorrect vertical spacing.
+       This option may attract penalty.
+  "-feedback":
+       Check the program execution without submission.
+```
+
+## [Back to milestones](#milestones)
+
+
+# Milestone 3
+## Streamable Interface module and Publication class module
+
+> An Interface is an abstract base class with only pure virtual functions.
+
+This milestone will include the Date and Utils modules. 
+
+Before starting to develop milestone 3, please apply the following modifications to the Date module:
+
+### In Date.cpp
+- In Date::read() method:
+   remove "flushing the keyboard" (i.e. `cin.ignore(1000,'\n')`) at the end of your read function. The read function should not flush the keyboard when the reading process is done.
+
+- Add the following global variable (for testing purposes) to the top of the **sdds** namespace in Date.cpp.
+```C++
+   bool sdds_test = false;
+   int sdds_year = 2021;
+   int sdds_mon = 12;
+   int sdds_day = 25;
+```
+- replace **systemYear** and **setToToday** methods with the following:
+```C++
+   int Date::systemYear()const {
+      int theYear = sdds_year;
+      if (!sdds_test) {
+         time_t t = time(NULL);
+         tm lt = *localtime(&t);
+         theYear = lt.tm_year + 1900;
+      }
+      return theYear;
+   }
+   void Date::setToToday() {
+      if (sdds_test) {
+         m_day = sdds_day;
+         m_mon = sdds_mon;
+         m_year = sdds_year;
+      }
+      else {
+         time_t t = time(NULL);
+         tm lt = *localtime(&t);
+         m_day = lt.tm_mday;
+         m_mon = lt.tm_mon + 1;
+         m_year = lt.tm_year + 1900;
+      }
+      errCode(NO_ERROR);
+   }
+```
+
+
+### in Date.h 
+- Add the following to the bottom of the **sdds** namespace; This will make the global variables added to Date.cpp, truly global for any code including "Date.h".
+```C++
+   extern bool sdds_test;
+   extern int sdds_year;
+   extern int sdds_mon;
+   extern int sdds_day;
+```
+
+## Types of publications in Seneca Library
+Seneca Library holds two types of Publication; Periodical (like newspapers and Magazines) and Books. 
+
+Publications are not loaned out to members. Members can check them out and read them in the library. These publications are put back on their shelves at the end of the day.
+
+Books can be borrowed and returned within 15 days. After 15 days, the member will be charged daily for a late penalty.
+
+## General definitions of the library system. 
+Create a header file called **"Lib.h"** to hold all the general values of the system. 
+Add the following and any other general values you find necessary to this header file. This header file should be included anywhere any of these values are needed. 
+```C++
+const int SDDS_MAX_LOAN_DAYS = 15; 
+     // maximum number of day a publication can be borrowed with no penalty
+const int SDDS_TITLE_WIDTH = 30;
+    // The width in which the title of a publication should be printed on the console
+const int SDDS_AUTHOR_WIDTH = 15;
+    // The width in which the author name of a book should be printed on the console
+const int SDDS_SHELF_ID_LEN = 4;
+   // The width in which the shelf id of a publication should be printed on the console
+const int SDDS_LIBRARY_CAPACITY = 5000;
+   // Maximum number of publications the library can hold.
+```
+
+
+## Streamable Interface Modules.
+Create an Interface called **Streamable** to enforce implementation of the following methods. Any class inherited from Streamable will have the capability to be inserted into or extracted from a  stream.
+
+### Streamable Pure Virtual funcitons
+Add the following pure virtual function to Streamable:
+
+#### `write` pure virtual function
+This method is not capable of modifying the Streamable object.  **write** receives and returns a reference of an `ostream` object.
+
+Functions overriding this function will write into an ostream object.
+
+#### `read` pure virtual function
+**read** receives and returns a reference of an `istream` object.
+
+Functions overriding this function will read from an istream object.
+
+#### `conIO`
+This method is not capable of modifying the Streamable object. **conIo** receives a reference of an `ios` object and returns a Boolean.
+
+Functions overriding this function will determine if the incoming `ios` object is a console IO object or not.
+
+#### `Boolean conversion operator overload` (pure virtual)
+
+Boolean conversion overloads of this method will return if the Streamable object is in a valid state or not.
+
+### destructor
+Add an empty virtual destructor to this interface to guaranty that the descendants of the Streamable are removed from memory with no leak.
+
+### Insertion operator overload
+Overload the insertion operator so a constant object of type Streamable can be written on an ostream object only if the Streamable object is in a valid state. Otherwise, the function will quietly ignore the insertion action.
+
+
+### Extraction operator overload
+Overload the extraction operator so an object of type Streamable can be read from an istream object.
+
+
+
+
+
+## Publication class module
+The publication class is a general encapsulation of any periodic publication. 
+> Later by adding an author to the descendant of the **Publication** class we will encapsulate a **Book** for the system.
+
+### Publication Attributes
+#### m_title
+**m_title** is a c-string to hold a dynamic title for the publication. 
+> To ease the implementation, let's assume this dynamic array can not be more than 255 characters long.
+
+This attribute is **null** by default.
+#### m_shelfId
+Hold the location of the publication in the library. 
+**m_shelfId** is a c-string that is exactly 4 characters long. 
+
+##### MS3 V1.1
+This attribute is an empty string by default.
+
+#### m_membership
+This attribute is an integer to hold a 5 digit membership number of members of the library. 
+
+In this class, if the membership number is '0', it means the publication is available and is not checked out by any members. 
+
+If the membership number is a five-digit number, it means the publication is checked out by the member holding that membership number.
+
+This attribute is zero by default.
+
+#### m_libRef
+This serial number is used internally to uniquely identify each publication in the system. 
+
+This attribute is -1 by default.
+
+#### m_date
+A Date object.
+
+In periodical publications, this date is used for the publish date of the item. 
+
+In Books, this date is used to keep the date on which the book was borrowed by the member.
+
+The Date, by default, is set to the current date.
+
+### Constructor (default)
+Sets all the attributes to their default values.
+
+### Methods
+#### Modifiers
+```C++  
+virtual void set(int member_id);
+   // Sets the membership attribute to either zero or a five-digit integer.
+void setRef(int value);
+   // Sets the **libRef** attribute value
+void resetDate();
+   // Sets the date to the current date of the system.
+```
+
+#### Queries
+
+```C++
+virtual char type()const;
+   //Returns the character 'P' to identify this object as a "Publication object"
+bool onLoan()const;
+   //Returns true is the publication is checkout (membership is non-zero)
+Date checkoutDate()const; 
+   //Returns the date attribute
+bool operator==(const char* title)const;
+   //Returns true if the argument title appears anywhere in the title of the 
+   //publication. Otherwise, it returns false; (use strstr() function in <cstring>)
+operator const char* ()const;
+   //Returns the title attribute
+int getRef()const;
+   //Returns the libRef attirbute. 
+```
+ 
+
+### Streamable pure virtual function implementations
+
+#### `bool conIO(ios& io)const`
+Returns true if the address of the **io** object is the same as the address of either the **cin** object or the **cout** object.
+
+#### `ostream& write(ostream& os) const`
+If the **os** argument is a console IO object (use **conIO()**), print **shelfId**, **title**, **membership** and **date** attributes as the following format (title is left-justified padded with dots)
+
+##### MS3 V1.1.1
+```text
+         1         2         3         4         5         6         7 
+1234567890123456789012345678901234567890123456789012345678901234567890
+| P001 | The Toronto Star.............. | 34037 | 2021/11/17 |
+| P007 | Macleans Magazine............. |  N/A  | 2021/11/11 |
+```
+Otherwise:
+
+Print the type() and then libRef, shelfId, title, membership and date attributes in a tab-separated format. 
+```Text
+P	2001	P001	The Toronto Star	34037	2021/11/17
+```
+
+No newline is printed afterwards either way.
+
+#### `istream& read(istream& istr)`
+Read all the values in local variables before setting the attributes to any values.
+
+First, clear all the attributes by freeing the memory and setting everything to their default values.
+
+Then, if the istr argument is a console IO object (use conIO()) read the attributes as  follows:
+
+- prompt: `"Shelf No: "`
+- read the shelf number up to its limit (see Lib.h).
+- if the number is not exactly the length it is supposed to be, set the istr to a fail state manually.
+- prompt: `"Title: "`
+- read the title
+- prompt: `"Date: "`
+- read the date
+> in this case the libRef value is left with its default value.
+
+Otherwise, assume reading begins with libRef attribute as if the type 'P' is not in the file.
+
+- read the libRef number
+- skip the tab
+- read the shelf number
+- skip the tab
+- read the title 
+- skip the tab
+- read the membership
+- skip the tab
+- read the date
+
+Either way if the date is in an invalid state set the istr to a fail state manually
+
+After the process of reading is done if istr is in a valid state:
+
+- Dynamically store the title into the title attribute
+- copy the shelf id into the shelfId attribute
+- set the membership
+- set the date
+- set the libRef attribute
+
+At the end return the istr argument.
+
+#### `operator bool() const `
+
+Returns true if neither of the title or shelfId attributes is null or empty. Otherwise, it will return false.
+
+### The Rule of three
+Make sure this object complies with the guidelines of the Rule of three so the copying and assignment and destruction are done safely and without any memory leak.
+
+
+## the Tester program
+
+```C++
+// Final Project Milestone 3
+// Periodical Publication 
+// File	ms3_tester.cpp
+// Version 1.0
+// Author	Fardad Soleimanloo
+// Revision History
+// -----------------------------------------------------------
+// Name               Date                 Reason
+// Fardad             2021/11/15		       Preliminary release
+/////////////////////////////////////////////////////////////////
+#include <iostream>
+#include <fstream>
+#include "Publication.h"
+#include "Utils.h"
+#include "Date.h"
+
+
+using namespace std;
+using namespace sdds;
+Publication readPublication(istream& istr) {
+   Publication P;
+   cin >> P;
+   return P;
+}
+Publication getNextRec(ifstream& ifstr) {
+   Publication P;
+   ifstr >> P;
+   ifstr.ignore(1000, '\n');
+   return P;
+}
+
+int main() {
+   sdds::sdds_test = true;
+   Publication pd;
+   cout << "An Invalid publication printout:" << endl;
+   cout << ">" << pd << "<" << endl;
+   cout << "Enter the following: " << endl
+      << "P1234" << endl
+      << "------------------------------" << endl;
+   pd = readPublication(cin);
+   if (!cin) {
+      cin.clear();
+      cin.ignore(1000, '\n');
+   }
+   else {
+      cout << "This is not supposed to be printed!" << endl;
+   }
+   cout << "You entered:" << endl;
+   cout << ">" << pd << "<" << endl;
+   cout << "Enter the following: " << endl
+      << "P123" << endl
+      << "Seneca Weekly" << endl
+      << "2021/13/17" << endl
+      << "------------------------------" << endl;
+   pd = readPublication(cin);
+   if (!cin) {
+      cin.clear();
+      cin.ignore(1000, '\n');
+   }
+   else {
+      cout << "This is not supposed to be printed!" << endl;
+   }
+   cout << "You entered:" << endl;
+   cout << ">" << pd << "<" << endl;
+   cout << "Enter the following: " << endl
+      << "P123" << endl
+      << "Seneca Weekly" << endl
+      << "2021/11/17" << endl
+      << "------------------------------" << endl;
+   pd = readPublication(cin);
+   cout << "You entered:" << endl;
+   cout << pd << endl;
+   cout << "And the title is agian: \"" << (const char*)pd << "\"" << endl;
+   pd.set(12345);
+   if (pd.onLoan()) {
+      cout << "Now this publication is on loan to a member with the id: 12345" << endl;
+      pd.resetDate();
+      cout << "The checkout date is: " << pd.checkoutDate() << endl;
+      pd.setRef(9999);
+      cout << "The library unique reference id is: " << pd.getRef() << endl;
+      cout << pd << endl;
+      cout << "----------------------------------------------------------------" << endl;
+    }
+   cout << "Adding the periodical publication to the end of the data file:" << endl;
+   ofstream fileout("Periodicals.txt", ios::app);
+   if (pd) {
+      cout << "appeneded to the file" << endl;
+      fileout << pd << endl;
+   }
+   fileout.close();
+   cout << endl << "Contents of the file:" << endl;
+   ifstream filein("Periodicals.txt");
+   char pType{};
+   for (int row = 1; filein; row++) {
+      filein >> pType;
+      if (pType != 'P') {
+         cout << "The Record type signature is supposed to be B, but it is: " << pType << endl;
+         filein.setstate(ios::failbit);
+      }
+      filein.ignore();
+      pd = getNextRec(filein);
+      if (filein) {
+         cout << (pd.onLoan() ? "|*" : "| ");
+         cout.width(4);
+         cout.fill(' ');
+         cout.setf(ios::right);
+         cout << row << (pd.onLoan()? "*": " ");
+         cout.unsetf(ios::right);
+         cout << pd << (pd == "Star" ? "<<<":"") << endl;
+      }
+   }
+   return 0;
+}
+```
+ 
+## Tester Output
+[MS3 tester output](MS3/output.md)
+
+
+
+## MS3 Submission and the due date
+
+
+> If you would like to successfully complete the project and be on time, **start early** and try to meet all the due dates of the milestones.
+
+
+Upload your source code and the tester program (**Utils.cpp, Utils.h, Date.cpp, Date.h, Streamable.cpp, Streamable.h, Publication.cpp, Publication.h,Periodicals.txt, and ms3_tester.cpp**) to your `matrix` account. Compile and run your code using the `g++` compiler [as shown in the introduction](#compiling-and-testing-your-program) and make sure that everything works properly.
+
+Then, run the following command from your account (replace `profname.proflastname` with your professor’s Seneca userid):
+```
+~profname.proflastname/submit 2??/prj/m?
+```
+and follow the instructions.
+
+- *2??* is replaced with your subject code
+- *m?* is replaced with your milestone
+
+
+### The submit program's options:
+```bash
+~prof_name.prof_lastname/submit DeliverableName [-submission options]<ENTER>
+[-submission option] acceptable values:
+  "-due":
+       Shows due dates only
+       This option cannot be used in combination with any other option.
+  "-skip_spaces":
+       Do the submission regardless of incorrect horizontal spacing.
+       This option may attract penalty.
+  "-skip_blank_lines":
+       Do the submission regardless of incorrect vertical spacing.
+       This option may attract penalty.
+  "-feedback":
+       Check the program execution without submission.
+```
+
+## [Back to milestones](#milestones)
 
 
 
