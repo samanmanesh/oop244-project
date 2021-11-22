@@ -24,7 +24,7 @@ using namespace sdds;
 namespace sdds {
 
 
-	LibApp::LibApp() :m_changed(false), m_mainMenu("Seneca Libray Application"
+	LibApp::LibApp() :m_changed(false), m_mainMenu("Seneca Library Application"
 	), m_exitMenu("Changes have been made to the data, what would you like to do?") {
 		m_mainMenu << "Add New Publication" << "Remove Publication" << "Checkout publication from library" << "Return publication to library";
 		;
@@ -37,7 +37,7 @@ namespace sdds {
 		int returnedValue = 0;
 
 		Menu confirmMenu(message);
-		confirmMenu << "yes";
+		confirmMenu << "Yes";
 
 		returnedValue = confirmMenu.run();
 
@@ -90,7 +90,7 @@ namespace sdds {
 
 	void LibApp::checkOutPub() {
 		search();
-		if (confirm("Check out publication ? ")) {
+		if (confirm("Check out publication?")) {
 
 			m_changed = true;
 			cout << "Publication checked out" << endl;
@@ -145,6 +145,7 @@ namespace sdds {
 					}
 				}
 			}
+			cout << endl;
 		}
 		cout << "-------------------------------------------" << endl;
 		cout << "Thanks for using Seneca Library Application" << endl;
