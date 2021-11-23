@@ -57,6 +57,8 @@ namespace sdds {
 		std::istream& read(std::istream& istr);
 
 		void setTodefaultValue();
+
+		operator bool() const;
 	};
 
 	bool Publication::conIO(ios& io)const {
@@ -163,6 +165,10 @@ namespace sdds {
 		return istr;
 	};
 
+	Publication::operator bool() const {
+	
+		return(m_title == nullptr || m_shelfId == nullptr);
+	};
 
 
 	void Publication::resetDate() {
