@@ -1,10 +1,11 @@
-#ifndef SDDS_STREAMABLE_H
-#define SDDS_STREAMABLE_H
+#ifndef SDDS_PUBLICATION_H
+#define SDDS_PUBLICATION_H
 #include <iostream>
 #include "Date.h"
+#include "Streamable.h"
 namespace sdds {
 
-	class Publication {
+	class Publication : public Streamable {
 
 		//char* m_title[255]{};
 		char* m_title{};
@@ -46,9 +47,14 @@ namespace sdds {
 		int getRef()const;
 		//Returns the libRef attirbute. 
 
+		bool conIO(std::ios& io)const;
 
 	};
 
+	bool Publication::conIO(ios& io)const {
+		bool result = ((&io == &cin) || (&io == &cout)) ? true : false;
+		return result;
+	};
 
 
 	void Publication::resetDate() {
