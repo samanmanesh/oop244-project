@@ -26,6 +26,9 @@ namespace sdds {
 
 		int static getInt(int minRange, int maxRange, const char* errorMessage);
 
+		void static getDynamicChar(std::istream& istr, char* charToStore, const char delimiter ='\n');
+
+		void static getChar(std::istream& istr, char* charToStore, const int maxLen , const char delimiter = '\n');
 	};
 }
 #endif // SDDS_UTILS_H__

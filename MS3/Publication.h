@@ -3,6 +3,9 @@
 #include <iostream>
 #include "Date.h"
 #include "Streamable.h"
+#include "Utils.h"
+#include "Lib.h"
+#include <fstream> 
 namespace sdds {
 
 	class Publication : public Streamable {
@@ -50,6 +53,10 @@ namespace sdds {
 		bool conIO(std::ios& io)const;
 
 		std::ostream& write(std::ostream& os) const;
+
+		std::istream& read(std::istream& istr);
+
+		void setTodefaultValue();
 	};
 
 	bool Publication::conIO(ios& io)const {
@@ -59,7 +66,7 @@ namespace sdds {
 
 
 	ostream& Publication::write(ostream& os) const {
-	
+		
 		if (conIO(os)) {
 			os << "| ";
 			os << m_shelfId;
@@ -71,7 +78,7 @@ namespace sdds {
 			os.unsetf(ios::left);
 			os.fill(' ');
 			os << "| ";
-			os << m_membership;
+			(m_membership != 0) ? os << m_membership : os << "N/A";
 			os << " | ";
 			os << m_date;
 			os << " |";
@@ -91,6 +98,72 @@ namespace sdds {
 			os << m_date;
 		}	
 	};
+
+	void Publication::setTodefaultValue() {
+		char* m_title = nullptr;
+		char m_shelfId[5] = "\0";
+		int m_membership = 0;
+		int m_libRef = -1;
+	};
+
+
+	istream& Publication::read(istream& istr) {
+		
+		char* title = nullptr;
+		char shelfId[5] = "\0";
+		int membersheip = 0;
+		int libRef = -1;
+		Date D;
+		setTodefaultValue();
+		if (conIO(istr))
+		{
+			cout << "Shelf No: ";
+			Utils::getChar(istr, shelfId, SDDS_SHELF_ID_LEN);
+			if(strlen(shelfId) != SDDS_SHELF_ID_LEN) istr.setstate(ios::failbit);
+			cout << "Title: ";
+			Utils::getDynamicChar(istr, title);
+			cout << "Date: ";
+			do {
+				cin >> D;      // get D from console
+			} while (!D && cout << D.dateStatus() << ", Please try again > ");  // if D is invalid, print error message and loop
+			//istr >> D;
+
+		}
+		else
+		{	
+			//std::ifstream("Periodicals.txt"); or
+			std::fstream iofile("Periodicals.txt", ios::in);
+
+			while (iofile)
+			{
+				iofile >> libRef;
+				iofile.ignore();
+				iofile >> shelfId;
+				iofile.ignore();
+				iofile >> title;
+				iofile.ignore();
+				iofile >> membersheip;
+				iofile.ignore();
+				iofile >> D;
+			}
+			
+		}
+		if (!D) istr.setstate(ios::failbit);
+
+		if (!istr.fail()) {
+			delete[] m_title;
+			strcpy(m_title, title);
+			
+			strcpy(m_shelfId, shelfId);
+
+			set(m_membership);
+			m_date = D;
+			setRef(libRef);
+		}
+		return istr;
+	};
+
+
 
 	void Publication::resetDate() {
 
