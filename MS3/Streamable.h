@@ -9,11 +9,11 @@ namespace sdds {
 	{
 	public:
 	
-		virtual ostream& write(ostream& ostr)const = 0;
+		virtual std::ostream& write(std::ostream& ostr)const = 0;
 		
-		virtual istream& read(istream& istr) = 0;
+		virtual std::istream& read(std::istream& istr) = 0;
 
-		virtual bool conIO( ios& iosref) = 0;
+		virtual bool conIO(std::ios& iosref) = 0;
 		
 		virtual operator bool() const = 0;
 
