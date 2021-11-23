@@ -13,7 +13,7 @@ namespace sdds {
 	{
 		// just to make sure both works but dont need this
 		char* m_title = nullptr;
-		char m_chelfId[5] = "\0";
+		char m_shelfId[5] = "\0";
 		int m_membership = 0;
 		int m_libRef = -1;
 	}

@@ -9,7 +9,7 @@ namespace sdds {
 
 		//char* m_title[255]{};
 		char* m_title{};
-		char m_chelfId[5]{};
+		char m_shelfId[5]{};
 		int m_membership = 0;
 		int m_libRef = -1;
 		Date m_date;
@@ -49,6 +49,7 @@ namespace sdds {
 
 		bool conIO(std::ios& io)const;
 
+		std::ostream& write(std::ostream& os) const;
 	};
 
 	bool Publication::conIO(ios& io)const {
@@ -56,6 +57,40 @@ namespace sdds {
 		return result;
 	};
 
+
+	ostream& Publication::write(ostream& os) const {
+	
+		if (conIO(os)) {
+			os << "| ";
+			os << m_shelfId;
+			os << " | ";
+			os.setf(ios::left);
+			os.fill('.');
+			os.width(40);
+			os << m_title;
+			os.unsetf(ios::left);
+			os.fill(' ');
+			os << "| ";
+			os << m_membership;
+			os << " | ";
+			os << m_date;
+			os << " |";
+		}
+		else
+		{
+			os.width(10);
+			os << type();
+			os.width(6);
+			os << m_libRef;
+			os.width(8);
+			os << m_shelfId;
+			os.width(23);
+			os << m_title;
+			os.width(7);
+			os << m_membership;
+			os << m_date;
+		}	
+	};
 
 	void Publication::resetDate() {
 
