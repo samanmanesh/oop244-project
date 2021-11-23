@@ -19,7 +19,11 @@ namespace sdds {
 
 	public:
 		Publication();
+		Publication(const Publication& pbc);
+		Publication& operator=(const Publication& pbc);
 		~Publication();
+
+
 
 		virtual void set(int member_id);
 		// Sets the membership attribute to either zero or a five-digit integer.

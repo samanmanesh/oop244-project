@@ -18,8 +18,41 @@ namespace sdds {
 		int m_libRef = -1;
 	}
 
+	Publication::Publication(const Publication& pbc) {
+	
+		if (pbc.m_title && pbc.m_shelfId)
+		{
+			delete[] m_title;
+			m_shelfId[0]='\0';
+			m_title = new char[strlen(pbc.m_title) + 1];
+			strcpy(m_title, pbc.m_title);
+			strcpy(m_shelfId, pbc.m_shelfId);
+			m_membership = pbc.m_membership;
+			m_libRef = pbc.m_libRef;
+			m_date = pbc.m_date;
+		}
+	
+	};
+	Publication& Publication::operator=(const Publication& pbc) {
+		if (this != &pbc)
+		{
+			delete[] m_title;
+			m_shelfId[0] = '\0';
+			m_title = new char[strlen(pbc.m_title) + 1];
+			strcpy(m_title, pbc.m_title);
+			strcpy(m_shelfId, pbc.m_shelfId);
+			m_membership = pbc.m_membership;
+			m_libRef = pbc.m_libRef;
+			m_date = pbc.m_date;
+
+		}
+		return *this;
+	};
+
 	Publication::~Publication()
-	{
+	{	
+		delete[] m_title;
+		delete[] m_shelfId;
 	}
 
 	void Publication::set(int member_id) {
