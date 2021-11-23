@@ -9,21 +9,18 @@ namespace sdds {
 	{
 	public:
 	
-		virtual ostream& write(ostream& ostr) = 0;
+		virtual ostream& write(ostream& ostr)const = 0;
 		
 		virtual istream& read(istream& istr) = 0;
 
-
+		virtual bool conIO( ios& iosref) = 0;
 		
+		virtual operator bool() const = 0;
+
 		virtual ~Streamable();
 
 	};
 
-	
-
-	Streamable::~Streamable()
-	{
-	}
 
 	std::ostream& operator<<(std::ostream& ostr, const Streamable& RO);
 
