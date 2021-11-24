@@ -9,16 +9,13 @@ using namespace sdds;
 using namespace std;
 
 namespace sdds {
-		
-	Publication::Publication() : m_title(nullptr)
-		, m_membership(0)
-		, m_libRef(-1)
+
+	Publication::Publication()
 	{
-		 m_shelfId[0] = '\0';
 	}
 
 	Publication::Publication(const Publication& pbc) {
-		
+
 		*this = pbc;
 		/*if (pbc.m_title && pbc.m_shelfId)
 		{
@@ -31,18 +28,26 @@ namespace sdds {
 			m_libRef = pbc.m_libRef;
 			m_date = pbc.m_date;
 		}*/
-	
+
 	};
 	Publication& Publication::operator=(const Publication& pbc) {
 		if (this != &pbc)
 		{
 			delete[] m_title;
-			m_shelfId[0] = '\0';
-			m_title = new char[strlen(pbc.m_title) + 1];
-			strcpy(m_title, pbc.m_title);
+			m_title = nullptr;
+
+			if (pbc.m_title)
+			{
+				m_title = new char[strlen(pbc.m_title) + 1];
+				strcpy(m_title, pbc.m_title);
+			}
+
+			//m_shelfId[0] = '\0';
 			strcpy(m_shelfId, pbc.m_shelfId);
-			m_membership = pbc.m_membership;
-			m_libRef = pbc.m_libRef;
+			//m_membership = pbc.m_membership;
+			set(pbc.m_membership);
+			setRef(pbc.m_libRef);
+			//m_libRef = pbc.m_libRef;
 			m_date = pbc.m_date;
 
 		}
@@ -50,9 +55,8 @@ namespace sdds {
 	};
 
 	Publication::~Publication()
-	{	
+	{
 		delete[] m_title;
-		//delete[] m_shelfId;
 	}
 
 	void Publication::set(int member_id) {
@@ -63,6 +67,9 @@ namespace sdds {
 		m_libRef = value;
 	};
 
+	void Publication::resetDate() {
+		m_date = Date();
+	};
 
 	char Publication::type()const {
 		return ('P');
@@ -78,7 +85,7 @@ namespace sdds {
 
 	bool Publication::operator==(const char* title)const {
 
-		return(strstr(m_title, title));
+		return(strstr(m_title, title) != nullptr);
 	};
 
 
@@ -99,7 +106,7 @@ namespace sdds {
 
 	ostream& Publication::write(ostream& os) const {
 
-		if (conIO(os) ) {
+		if (conIO(os)) {
 			os << "| ";
 			os << m_shelfId;
 			os << " | ";
@@ -139,32 +146,50 @@ namespace sdds {
 	};
 
 	void Publication::setTodefaultValue() {
-		char* m_title = nullptr;
-		char m_shelfId[5] = "\0";
-		int m_membership = 0;
-		int m_libRef = -1;
+		if (m_title)
+		{
+			delete[] m_title;
+			m_title = nullptr;
+		}
+		m_shelfId[0] = '\0';
+		m_membership = 0;
+		m_libRef = -1;
 	};
 
 
 	istream& Publication::read(istream& istr) {
-
-		char* title = nullptr;
-		char shelfId[5] = "\0";
+		char title[256] = { 0 };
+		//char* title = nullptr;
+		//char* shelfId = new char[SDDS_SHELF_ID_LEN + 1];
+		char shelfId[SDDS_SHELF_ID_LEN + 2] = { 0 };
 		int membership = 0;
 		int libRef = -1;
 		Date D;
 		setTodefaultValue();
+
 		if (conIO(istr))
 		{
 			cout << "Shelf No: ";
-			Utils::getChar(istr, shelfId, SDDS_SHELF_ID_LEN);
-			if (strlen(shelfId) != SDDS_SHELF_ID_LEN) istr.setstate(ios::failbit);
+			//Utils::getChar(istr, shelfId, SDDS_SHELF_ID_LEN + 1);
+			istr.get(shelfId, SDDS_SHELF_ID_LEN + 2);
+
+			if (strlen(shelfId) != SDDS_SHELF_ID_LEN)
+			{
+				istr.setstate(ios_base::failbit);
+				cout << "read here" << endl;
+			}
+			else
+			{
+				//istr.ignore(1000, '\n');
+			}
+
+
 			cout << "Title: ";
-			Utils::getDynamicChar(istr, title);
+			//Utils::getDynamicChar(istr, title);
+			istr.get(title, strlen(title), '\n');
+
 			cout << "Date: ";
-			do {
-				D.read(istr);      // get Date from console
-			} while (!D && cout << D.dateStatus() << ", Please try again > ");  // if D is invalid, print error message and loop
+			D.read(istr);
 			//istr >> D;
 
 		}
@@ -172,71 +197,51 @@ namespace sdds {
 		{
 			istr >> libRef;
 			istr.ignore();          //Ignore TAB
-			istr.getline(shelfId, SDDS_SHELF_ID_LEN + 1, '\t');
+			istr.get(shelfId, SDDS_SHELF_ID_LEN + 1, '\t');
 			istr.ignore();          //Ignore TAB
-			
+
 			//istr.get(title, sizeof(title), '\t');
-			istr.getline(title, strlen(title), '\t');
-			
+			if (title)
+			{
+				istr.get(title, strlen(title), '\t');
+			}
+			//istr.get(title, strlen(title), '\t');
+
 			istr.ignore();          //Ignore TAB
 			istr >> membership;
 			istr.ignore();          //Ignore TAB
 			istr >> D;
-			////std::ifstream("Periodicals.txt"); or
-			//std::fstream iofile("Periodicals.txt", ios::in);
 
-			//while (iofile)
-			//{
-			//	iofile >> libRef;
-			//	iofile.ignore();
-			//	iofile >> shelfId;
-			//	iofile.ignore();
-			//	iofile >> title;
-			//	iofile.ignore();
-			//	iofile >> membersheip;
-			//	iofile.ignore();
-			//	iofile >> D;
-			//}
 
 		}
-		if (!D) istr.setstate(ios::failbit);
+		if (!D) 
+			istr.setstate(ios_base::failbit);
 
 		if (!istr.fail()) {
-			delete[] m_title;
+			//delete[] m_title;
 			m_title = new char[strlen(title) + 1];
-			if (title)
-			{
-				strcpy(m_title, title);
-			}
-			else
-			{
-				m_title = nullptr;
-			}
-			
-
-			strcpy(m_shelfId, shelfId);
-
-			set(m_membership);
-			m_date = D;
-			setRef(libRef);
+			strcpy(m_title, title);
 		}
+		else
+		{
+			m_title = nullptr;
+		}
+
+		strcpy(m_shelfId, shelfId);
+
+		set(m_membership);
+
+		m_date = D;
+
+		setRef(libRef);
+
 		return istr;
 	};
 
 	Publication::operator bool() const {
 
-		return(m_title == nullptr || m_shelfId == nullptr);
+		return(m_title || m_shelfId[0]);
 	};
-
-
-	void Publication::resetDate() {
-
-
-		// if useing m_date.setToToday() is private method
-		//m_date.setToToday();
-		m_date = Date();
-	};
-
 
 };
 

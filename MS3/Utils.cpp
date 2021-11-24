@@ -61,8 +61,10 @@ namespace sdds {
 
 	void Utils::getChar(istream& istr, char* charToStore, const int maxLen, const char delimiter ) {
 		
-		char tmp[128];
-		istr.getline(tmp, maxLen, delimiter);
+		//char tmp[128];
+		istr.getline(charToStore, maxLen, delimiter);
 		
+
+
 	};
 }
