@@ -1,5 +1,8 @@
+#ifndef SDDS_LIB_H
+#define SDDS_LIB_H
+
 namespace sdds {
-	
+
 	const int SDDS_MAX_LOAN_DAYS = 15;
 	// maximum number of day a publication can be borrowed with no penalty
 	const int SDDS_TITLE_WIDTH = 30;
@@ -12,3 +15,7 @@ namespace sdds {
 	// Maximum number of publications the library can hold.
 
 }
+
+#endif // !SDDS_LIB_H
+
+

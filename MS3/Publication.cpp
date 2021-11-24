@@ -4,23 +4,23 @@
 #include <iostream>
 #include <cstring>
 #include "Publication.h"
+#include "Lib.h"
 using namespace sdds;
 using namespace std;
 
 namespace sdds {
 		
-	Publication::Publication()
+	Publication::Publication() : m_title(nullptr)
+		, m_membership(0)
+		, m_libRef(-1)
 	{
-		// just to make sure both works but dont need this
-		char* m_title = nullptr;
-		char m_shelfId[5] = "\0";
-		int m_membership = 0;
-		int m_libRef = -1;
+		 m_shelfId[0] = '\0';
 	}
 
 	Publication::Publication(const Publication& pbc) {
-	
-		if (pbc.m_title && pbc.m_shelfId)
+		
+		*this = pbc;
+		/*if (pbc.m_title && pbc.m_shelfId)
 		{
 			delete[] m_title;
 			m_shelfId[0]='\0';
@@ -30,7 +30,7 @@ namespace sdds {
 			m_membership = pbc.m_membership;
 			m_libRef = pbc.m_libRef;
 			m_date = pbc.m_date;
-		}
+		}*/
 	
 	};
 	Publication& Publication::operator=(const Publication& pbc) {
@@ -52,7 +52,7 @@ namespace sdds {
 	Publication::~Publication()
 	{	
 		delete[] m_title;
-		delete[] m_shelfId;
+		//delete[] m_shelfId;
 	}
 
 	void Publication::set(int member_id) {
@@ -91,44 +91,51 @@ namespace sdds {
 	};
 
 
-	bool Publication::conIO(ios& io)const {
-		bool result = ((&io == &cin) || (&io == &cout)) ? true : false;
+	bool Publication::conIO(ios& iosref)const {
+		bool result = ((&iosref == &cin) || (&iosref == &cout)) ? true : false;
 		return result;
 	};
 
 
 	ostream& Publication::write(ostream& os) const {
 
-		if (conIO(os)) {
+		if (conIO(os) ) {
 			os << "| ";
 			os << m_shelfId;
 			os << " | ";
 			os.setf(ios::left);
 			os.fill('.');
-			os.width(40);
+			//os.width(40);
+			os.width(SDDS_TITLE_WIDTH);
 			os << m_title;
 			os.unsetf(ios::left);
 			os.fill(' ');
 			os << "| ";
-			(m_membership != 0) ? os << m_membership : os << "N/A";
+			(m_membership != 0) ? os << m_membership : os << " N/A ";
 			os << " | ";
 			os << m_date;
 			os << " |";
 		}
 		else
 		{
-			os.width(10);
+			//os.width(10);
 			os << type();
-			os.width(6);
+			//os.width(6);
+			os << "\t";
 			os << m_libRef;
-			os.width(8);
+			//os.width(8);
+			os << "\t";
 			os << m_shelfId;
-			os.width(23);
+			//os.width(23);
+			os << "\t";
 			os << m_title;
-			os.width(7);
+			//os.width(7);
+			os << "\t";
 			os << m_membership;
+			os << "\t";
 			os << m_date;
 		}
+		return os;
 	};
 
 	void Publication::setTodefaultValue() {
@@ -143,7 +150,7 @@ namespace sdds {
 
 		char* title = nullptr;
 		char shelfId[5] = "\0";
-		int membersheip = 0;
+		int membership = 0;
 		int libRef = -1;
 		Date D;
 		setTodefaultValue();
@@ -163,28 +170,49 @@ namespace sdds {
 		}
 		else
 		{
-			//std::ifstream("Periodicals.txt"); or
-			std::fstream iofile("Periodicals.txt", ios::in);
+			istr >> libRef;
+			istr.ignore();          //Ignore TAB
+			istr.getline(shelfId, SDDS_SHELF_ID_LEN + 1, '\t');
+			istr.ignore();          //Ignore TAB
+			
+			//istr.get(title, sizeof(title), '\t');
+			istr.getline(title, strlen(title), '\t');
+			
+			istr.ignore();          //Ignore TAB
+			istr >> membership;
+			istr.ignore();          //Ignore TAB
+			istr >> D;
+			////std::ifstream("Periodicals.txt"); or
+			//std::fstream iofile("Periodicals.txt", ios::in);
 
-			while (iofile)
-			{
-				iofile >> libRef;
-				iofile.ignore();
-				iofile >> shelfId;
-				iofile.ignore();
-				iofile >> title;
-				iofile.ignore();
-				iofile >> membersheip;
-				iofile.ignore();
-				iofile >> D;
-			}
+			//while (iofile)
+			//{
+			//	iofile >> libRef;
+			//	iofile.ignore();
+			//	iofile >> shelfId;
+			//	iofile.ignore();
+			//	iofile >> title;
+			//	iofile.ignore();
+			//	iofile >> membersheip;
+			//	iofile.ignore();
+			//	iofile >> D;
+			//}
 
 		}
 		if (!D) istr.setstate(ios::failbit);
 
 		if (!istr.fail()) {
 			delete[] m_title;
-			strcpy(m_title, title);
+			m_title = new char[strlen(title) + 1];
+			if (title)
+			{
+				strcpy(m_title, title);
+			}
+			else
+			{
+				m_title = nullptr;
+			}
+			
 
 			strcpy(m_shelfId, shelfId);
 
@@ -205,7 +233,8 @@ namespace sdds {
 
 
 		// if useing m_date.setToToday() is private method
-		m_date.setToToday();
+		//m_date.setToToday();
+		m_date = Date();
 	};
 
 

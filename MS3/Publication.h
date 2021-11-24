@@ -5,14 +5,14 @@
 #include "Streamable.h"
 #include "Utils.h"
 #include "Lib.h"
-#include <fstream> 
+//#include <fstream> 
 namespace sdds {
 
 	class Publication : public Streamable {
 
 		//char* m_title[255]{};
-		char* m_title{};
-		char m_shelfId[5]{};
+		char* m_title;
+		char m_shelfId[SDDS_SHELF_ID_LEN +1]{};
 		int m_membership = 0;
 		int m_libRef = -1;
 		Date m_date;
@@ -54,7 +54,7 @@ namespace sdds {
 		int getRef()const;
 		//Returns the libRef attirbute. 
 
-		bool conIO(std::ios& io)const;
+		bool conIO(std::ios& iosref)const;
 
 		std::ostream& write(std::ostream& os) const;
 
