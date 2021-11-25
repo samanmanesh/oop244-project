@@ -170,22 +170,17 @@ namespace sdds {
 		if (conIO(istr))
 		{
 			cout << "Shelf No: ";
-			//Utils::getChar(istr, shelfId, SDDS_SHELF_ID_LEN + 1);
-			istr.get(shelfId, SDDS_SHELF_ID_LEN + 2);
+			//Utils::getCstr(istr, shelfId, SDDS_SHELF_ID_LEN + 1);
+			istr.getline(shelfId, SDDS_SHELF_ID_LEN + 1);
 
 			if (strlen(shelfId) != SDDS_SHELF_ID_LEN)
 			{
 				istr.setstate(ios_base::failbit);
-				cout << "read here" << endl;
+			//	cout << "read here" << endl;
 			}
-			else
-			{
-				//istr.ignore(1000, '\n');
-			}
-
 
 			cout << "Title: ";
-			//Utils::getDynamicChar(istr, title);
+			//Utils::getDynamicCstr(istr, title);
 			istr.get(title, strlen(title), '\n');
 
 			cout << "Date: ";

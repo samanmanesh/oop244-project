@@ -42,29 +42,20 @@ namespace sdds {
 			{
 				trueInt = true;
 			}
-
 		}
 		return selectedItem;
 	};
 
 
-	void Utils::getDynamicChar(istream& istr, char* charToStore, const char delimiter ) {
-		
+	void Utils::getDynamicCstr(istream& istr, char* strToStore, const char delimiter ) {
 		string tmp;
 		getline(istr, tmp, delimiter);
-
-		delete[] charToStore;
-		charToStore = new char[strlen(tmp.c_str()) + 1];
-		strcpy(charToStore, tmp.c_str());
-	
+		delete[] strToStore;
+		strToStore = new char[strlen(tmp.c_str()) + 1];
+		strcpy(strToStore, tmp.c_str());
 	};
 
-	void Utils::getChar(istream& istr, char* charToStore, const int maxLen, const char delimiter ) {
-		
-		//char tmp[128];
-		istr.getline(charToStore, maxLen, delimiter);
-		
-
-
+	void Utils::getCstr(istream& istr, char* strToStore, const int maxLen, const char delimiter ) {
+		istr.getline(strToStore, maxLen, delimiter);
 	};
 }
