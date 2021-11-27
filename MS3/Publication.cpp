@@ -102,7 +102,7 @@ namespace sdds {
 			os << m_title;
 			os.unsetf(ios::left);
 			os.fill(' ');
-			os << "| ";
+			os << " | ";
 			(m_membership != 0) ? os << m_membership : os << " N/A ";
 			os << " | ";
 			os << m_date;
@@ -211,7 +211,7 @@ namespace sdds {
 	
 			Utils::strCpy(m_shelfId, shelfId);
 
-			set(m_membership);
+			set(membership);
 
 			m_date = date;
 
