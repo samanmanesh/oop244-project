@@ -136,10 +136,10 @@ namespace sdds {
 
 
 	istream& Publication::read(istream& istr) {
-
-		char* title = nullptr;
-		//char shelfId[SDDS_SHELF_ID_LEN + 1] = { 0 };
-		char* shelfId = nullptr;
+		
+		char* title = new char[SDDS_TITLE_WIDTH + 1];
+		char shelfId[SDDS_SHELF_ID_LEN + 1] = { 0 };
+		//char* shelfId = nullptr;
 		int membership = 0;
 		int libRef = -1;
 		Date date;
@@ -150,29 +150,34 @@ namespace sdds {
 			cout << "Shelf No: ";
 			//Utils::getCstr(istr, shelfId, SDDS_SHELF_ID_LEN + 1);
 			//istr.getline(shelfId, SDDS_SHELF_ID_LEN + 1);
-			shelfId = Utils::dynRead(istr, '\n');
+			//shelfId = Utils::dynRead(istr, '\n');
+			istr.getline(shelfId, SDDS_SHELF_ID_LEN + 1);
 			if (Utils::strLen(shelfId) != SDDS_SHELF_ID_LEN)
 			{
+				//istr.ignore(1000, '\n');
 				istr.setstate(ios::failbit);
 
 			}
+			/*else {
+				istr.ignore(1000, '\n');
+			}*/
 
 			cout << "Title: ";
 			//Utils::getDynamicCstr(istr, title);
 			//istr.get(title, Utils::strLen(title), '\n');
-			title = Utils::dynRead(istr, '\n');
-
+			//title = Utils::dynRead(istr, '\n');
+			istr.getline(title, SDDS_TITLE_WIDTH + 1);
 			if ( title == nullptr || Utils::strLen(title) > SDDS_TITLE_WIDTH)
 			{
 				istr.setstate(ios::failbit);
 			}
 			cout << "Date: ";
-			date.read(istr);
+			//date.read(istr);
 			
 			
-				//istr >> date;
+				istr >> date;
 			
-		
+
 		}
 		else
 		{
@@ -182,12 +187,12 @@ namespace sdds {
 			istr.ignore();          //Ignore TAB
 
 			//istr.get(title, sizeof(title), '\t');
-			if (title)
+		/*	if (title)
 			{
-				istr.get(title, Utils::strLen(title), '\t');
-			}
+				
+			}*/
 			//istr.get(title, Utils::strLen(title), '\t');
-
+			istr.get(title, Utils::strLen(title), '\t');
 			istr.ignore();          //Ignore TAB
 			istr >> membership;
 			istr.ignore();          //Ignore TAB
@@ -195,26 +200,25 @@ namespace sdds {
 
 
 		}
+
 		if (!date)
 			istr.setstate(ios::failbit);
 
-		if (istr) {
+		if (!istr.fail()) {
 			delete[] m_title;
 			m_title = new char[Utils::strLen(title) + 1];
 			Utils::strCpy(m_title, title);
+	
+			Utils::strCpy(m_shelfId, shelfId);
+
+			set(m_membership);
+
+			m_date = date;
+
+			setRef(libRef);
 		}
-		else
-		{
-			m_title = nullptr;
-		}
+		
 
-		Utils::strCpy(m_shelfId, shelfId);
-
-		set(m_membership);
-
-		m_date = date;
-
-		setRef(libRef);
 
 		return istr;
 	};

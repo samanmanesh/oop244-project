@@ -136,7 +136,7 @@ namespace sdds {
 
 		if (is.fail()) {
 			is.clear();
-			is.ignore(10000, '\n');
+			//is.ignore(10000, '\n');
 			errCode(CIN_FAILED);
 			
 		}
