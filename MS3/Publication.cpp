@@ -16,7 +16,7 @@ that my professor provided to complete my workshops and assignments.
 
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
-
+#include <cstring>
 #include "Publication.h"
 #include "Lib.h"
 using namespace sdds;

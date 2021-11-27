@@ -51,8 +51,8 @@ namespace sdds {
 		string tmp;
 		getline(istr, tmp, delimiter);
 		delete[] strToStore;
-		strToStore = new char[strlen(tmp.c_str()) + 1];
-		strcpy(strToStore, tmp.c_str());
+		strToStore = new char[strLen(tmp.c_str()) + 1];
+		strCpy(strToStore, tmp.c_str());
 	};
 
 	void Utils::getCstr(istream& istr, char* strToStore, const int maxLen, const char delimiter ) {
