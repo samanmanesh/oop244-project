@@ -1,4 +1,18 @@
-
+/* Citation and Sources...
+Final Project Milestone 2
+Module: Publication 
+Filename: Publication.cpp
+Version 1.0
+Author	Mohammadhossein Sobhanmanesh
+Revision History
+-----------------------------------------------------------
+Date      Reason
+2020/11/13  Preliminary release
+2020/11/26  Debugged DMA
+-----------------------------------------------------------
+I have done all the coding by myself and only copied the code
+that my professor provided to complete my workshops and assignments.
+-----------------------------------------------------------*/
 
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
@@ -10,7 +24,7 @@ using namespace std;
 
 namespace sdds {
 
-	Publication::Publication(){}
+	Publication::Publication() {}
 
 	Publication::Publication(const Publication& pbc) {
 
@@ -136,7 +150,7 @@ namespace sdds {
 
 
 	istream& Publication::read(istream& istr) {
-		
+
 		char* title = new char[SDDS_TITLE_WIDTH + 1];
 		char shelfId[SDDS_SHELF_ID_LEN + 1] = { 0 };
 		//char* shelfId = nullptr;
@@ -148,54 +162,37 @@ namespace sdds {
 		if (conIO(istr))
 		{
 			cout << "Shelf No: ";
-			//Utils::getCstr(istr, shelfId, SDDS_SHELF_ID_LEN + 1);
-			//istr.getline(shelfId, SDDS_SHELF_ID_LEN + 1);
 			//shelfId = Utils::dynRead(istr, '\n');
 			istr.getline(shelfId, SDDS_SHELF_ID_LEN + 1);
 			if (Utils::strLen(shelfId) != SDDS_SHELF_ID_LEN)
 			{
-				//istr.ignore(1000, '\n');
 				istr.setstate(ios::failbit);
-
 			}
-			/*else {
-				istr.ignore(1000, '\n');
-			}*/
+
 
 			cout << "Title: ";
-			//Utils::getDynamicCstr(istr, title);
-			//istr.get(title, Utils::strLen(title), '\n');
 			//title = Utils::dynRead(istr, '\n');
 			istr.getline(title, SDDS_TITLE_WIDTH + 1);
-			if ( title == nullptr || Utils::strLen(title) > SDDS_TITLE_WIDTH)
+			if (title == nullptr || Utils::strLen(title) > SDDS_TITLE_WIDTH)
 			{
 				istr.setstate(ios::failbit);
 			}
 			cout << "Date: ";
 			//date.read(istr);
-			
-			
-				istr >> date;
-			
+			istr >> date;
+
 
 		}
 		else
 		{
 			istr >> libRef;
-			istr.ignore();          //Ignore TAB
+			istr.ignore();
 			istr.get(shelfId, SDDS_SHELF_ID_LEN + 1, '\t');
-			istr.ignore();          //Ignore TAB
-
-			//istr.get(title, sizeof(title), '\t');
-		/*	if (title)
-			{
-				
-			}*/
-			//istr.get(title, Utils::strLen(title), '\t');
+			istr.ignore();
 			istr.get(title, Utils::strLen(title), '\t');
-			istr.ignore();          //Ignore TAB
+			istr.ignore();
 			istr >> membership;
-			istr.ignore();          //Ignore TAB
+			istr.ignore();
 			istr >> date;
 
 
@@ -208,7 +205,7 @@ namespace sdds {
 			delete[] m_title;
 			m_title = new char[Utils::strLen(title) + 1];
 			Utils::strCpy(m_title, title);
-	
+
 			Utils::strCpy(m_shelfId, shelfId);
 
 			set(membership);
@@ -217,7 +214,7 @@ namespace sdds {
 
 			setRef(libRef);
 		}
-		
+
 
 
 		return istr;

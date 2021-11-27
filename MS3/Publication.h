@@ -1,3 +1,19 @@
+/* Citation and Sources...
+Final Project Milestone 2
+Module: Publication
+Filename: Publication.h
+Version 1.0
+Author	Mohammadhossein Sobhanmanesh
+Revision History
+-----------------------------------------------------------
+Date      Reason
+2020/11/13  Preliminary release
+2020/11/26  Debugged DMA
+-----------------------------------------------------------
+I have done all the coding by myself and only copied the code
+that my professor provided to complete my workshops and assignments.
+-----------------------------------------------------------*/
+
 #ifndef SDDS_PUBLICATION_H
 #define SDDS_PUBLICATION_H
 #include <iostream>
@@ -5,7 +21,6 @@
 #include "Streamable.h"
 #include "Utils.h"
 #include "Lib.h"
-//#include <fstream> 
 namespace sdds {
 
 	class Publication : public Streamable {
@@ -63,10 +78,5 @@ namespace sdds {
 
 		operator bool() const;
 	};
-
-	
-
-
-	
 };
 #endif

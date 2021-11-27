@@ -1,5 +1,5 @@
 /* Citation and Sources...
-Final Project Milestone 1
+Final Project Milestone 3
 Module: Date
 Filename: Date.cpp
 Version 1.0
@@ -8,7 +8,7 @@ Revision History
 -----------------------------------------------------------
 Date      Reason
 2020/11/9  Preliminary release
-2020/11/9  Debugged DMA
+2020/11/26  Debugged DMA
 -----------------------------------------------------------
 I have done all the coding by myself and only copied the code
 that my professor provided to complete my workshops and assignments.
@@ -16,7 +16,7 @@ that my professor provided to complete my workshops and assignments.
 // Final Project Milestone 1 
 // Date Module
 // File	Date.cpp
-// Version 1.0
+// Version 2.0
 // Author	Fardad Soleimanloo
 // Revision History
 // -----------------------------------------------------------

@@ -1,8 +1,8 @@
 /***********************************************************************
 // OOP244 Utils Module
 // File	Utils.cpp
-// Version 1
-// Date	2020/11/16
+// Version 2
+// Date	2020/11/27
 // Author	Mohammadhossein Sobhanmanesh
 // Description
 //
