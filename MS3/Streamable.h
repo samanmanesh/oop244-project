@@ -27,7 +27,7 @@ namespace sdds {
 		
 		virtual std::istream& read(std::istream& istr) = 0;
 
-		virtual bool conIO(std::ios& iosref)const = 0;
+		virtual bool conIO(const std::ios& iosref)const = 0;
 		
 		virtual operator bool() const = 0;
 

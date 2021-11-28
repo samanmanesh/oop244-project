@@ -34,15 +34,17 @@ namespace sdds {
 	Publication& Publication::operator=(const Publication& pbc) {
 		if (this != &pbc)
 		{
-			delete[] m_title;
-			m_title = nullptr;
+			if (m_title)
+			{
+				delete[] m_title;
+				m_title = nullptr;
+			}
 
 			if (pbc.m_title)
 			{
 				m_title = new char[Utils::strLen(pbc.m_title) + 1];
 				Utils::Utils::strCpy(m_title, pbc.m_title);
 			}
-
 
 			Utils::Utils::strCpy(m_shelfId, pbc.m_shelfId);
 
@@ -72,11 +74,11 @@ namespace sdds {
 	};
 
 	char Publication::type()const {
-		return ('P');
+		return 'P';
 	};
 
 	bool Publication::onLoan()const {
-		return(m_membership != 0);
+		return m_membership != 0;
 	};
 
 	Date Publication::checkoutDate()const {
@@ -85,7 +87,7 @@ namespace sdds {
 
 	bool Publication::operator==(const char* title)const {
 
-		return(strstr(m_title, title) != nullptr);
+		return strstr(m_title, title) != nullptr;
 	};
 
 
@@ -98,9 +100,8 @@ namespace sdds {
 	};
 
 
-	bool Publication::conIO(ios& iosref)const {
-		bool result = ((&iosref == &cin) || (&iosref == &cout)) ? true : false;
-		return result;
+	bool Publication::conIO(const ios& iosref)const {
+		return &iosref == &std::cin || &iosref == &std::cout;
 	};
 
 
@@ -149,81 +150,194 @@ namespace sdds {
 	};
 
 
-	istream& Publication::read(istream& istr) {
+	//istream& Publication::read(istream& istr) {
 
-		char* title = new char[SDDS_TITLE_WIDTH + 1];
-		char shelfId[SDDS_SHELF_ID_LEN + 1] = { 0 };
-		//char* shelfId = nullptr;
-		int membership = 0;
-		int libRef = -1;
-		Date date;
-		setTodefaultValue();
+	//	//char* title = new char[SDDS_TITLE_WIDTH + 1];
+	//	//char shelfId[SDDS_SHELF_ID_LEN + 1] = { 0 };
+	//	////char* shelfId = nullptr;
+	//	//int membership = 0;
+	//	//int libRef = -1;
+	//	//Date date;
+	//	//setTodefaultValue();
 
-		if (conIO(istr))
-		{
-			cout << "Shelf No: ";
-			//shelfId = Utils::dynRead(istr, '\n');
-			istr.getline(shelfId, SDDS_SHELF_ID_LEN + 1);
-			if (Utils::strLen(shelfId) != SDDS_SHELF_ID_LEN)
-			{
-				istr.setstate(ios::failbit);
-			}
-
-
-			cout << "Title: ";
-			//title = Utils::dynRead(istr, '\n');
-			istr.getline(title, SDDS_TITLE_WIDTH + 1);
-			if (title == nullptr || Utils::strLen(title) > SDDS_TITLE_WIDTH)
-			{
-				istr.setstate(ios::failbit);
-			}
-			cout << "Date: ";
-			//date.read(istr);
-			istr >> date;
+	//	//if (conIO(istr))
+	//	//{
+	//	//	cout << "Shelf No: ";
+	//	//	//shelfId = Utils::dynRead(istr, '\n');
+	//	//	istr.getline(shelfId, SDDS_SHELF_ID_LEN + 1);
+	//	//	if (Utils::strLen(shelfId) != SDDS_SHELF_ID_LEN)
+	//	//	{
+	//	//		istr.setstate(ios::failbit);
+	//	//	}
 
 
-		}
-		else
-		{
-			istr >> libRef;
-			istr.ignore();
-			istr.get(shelfId, SDDS_SHELF_ID_LEN + 1, '\t');
-			istr.ignore();
-			istr.get(title, Utils::strLen(title), '\t');
-			istr.ignore();
-			istr >> membership;
-			istr.ignore();
-			istr >> date;
+	//	//	cout << "Title: ";
+	//	//	//title = Utils::dynRead(istr, '\n');
+	//	//	istr.getline(title, SDDS_TITLE_WIDTH + 1);
+	//	//	if (title == nullptr || Utils::strLen(title) > SDDS_TITLE_WIDTH)
+	//	//	{
+	//	//		istr.setstate(ios::failbit);
+	//	//	}
+	//	//	cout << "Date: ";
+	//	//	//date.read(istr);
+	//	//	istr >> date;
 
 
-		}
+	//	//}
+	//	char shelfid[SDDS_SHELF_ID_LEN + 2] = { 0 },
+	//		title[256] = { 0 };
 
-		if (!date)
-			istr.setstate(ios::failbit);
+	//	int libref = -1, membership = 0;
 
-		if (!istr.fail()) {
-			delete[] m_title;
-			m_title = new char[Utils::strLen(title) + 1];
-			Utils::strCpy(m_title, title);
+	//	Date date;
 
-			Utils::strCpy(m_shelfId, shelfId);
+	//	if (m_title) {
+	//		delete[] m_title;
+	//		m_title = nullptr;
+	//	}
 
-			set(membership);
+	//	m_membership = 0;
+	//	m_libRef = -1;
+	//	m_shelfId[0] = 0;
 
-			m_date = date;
+	//	if (conIO(istr)) {
+	//		std::cout << "Shelf No: ";
+	//		istr.get(shelfid, SDDS_SHELF_ID_LEN + 2);
+	//		if (istr.gcount() != SDDS_SHELF_ID_LEN) {
+	//			istr.setstate(std::ios_base::failbit);        //Set to invalid state
+	//		}
+	//		else {
+	//			istr.ignore(1000, '\n');
+	//		}
 
-			setRef(libRef);
-		}
+	//		std::cout << "Title: ";
+	//		istr.get(title, sizeof(title), '\n');
+	//		std::cout << "Date: ";
+	//		istr >> date;
+	//	}
+	//	else
+	//	{
+	//		istr >> libref;
+	//		istr.ignore();
+	//		istr.getline(shelfid, SDDS_SHELF_ID_LEN + 1, '\t');
+	//		//istr.ignore();
+	//		istr.getline(title, Utils::strLen(title), '\t');
+	//		//istr.ignore();
+	//		istr >> membership;
+	//		istr.ignore();
+	//		istr >> date;
 
 
+	//	}
+	//	if (!date) {
+	//		istr.setstate(std::ios_base::failbit);        //Set to invalid state
+	//	}
 
-		return istr;
-	};
+	//	if (istr.good()) {                               //Fill attributes
+	//		m_title = new char[std::strlen(title) + 1];
+	//		std::strcpy(m_title, title);
+
+	//		std::strcpy(m_shelfId, shelfid);
+
+	//		m_membership = membership;
+
+	//		m_date = date;
+
+	//		m_libRef = libref;
+	//	}
+	//	//if (!date)
+	//	//	istr.setstate(ios::failbit);
+
+	//	//if (istr.good()) {
+	//	//	//delete[] m_title;
+	//	//	m_title = new char[Utils::strLen(title) + 1];
+	//	//	Utils::strCpy(m_title, title);
+
+	//	//	Utils::strCpy(m_shelfId, shelfid);
+
+	//	//	set(membership);
+
+	//	//	m_date = date;
+
+	//	//	setRef(libref);
+	//	//}
+
+	//	return istr;
+	//};
 
 	Publication::operator bool() const {
 
-		return(m_title || m_shelfId[0]);
+		return m_title && m_shelfId[0];
 	};
+
+
+
+	 std::istream & Publication::read  ( std::istream &is ){
+        char shelfid[SDDS_SHELF_ID_LEN+2] = {0},
+             title[256] = {0};
+
+        int libref = -1, membership = 0;
+
+        Date date;
+
+        if ( m_title ){
+            delete [] m_title;
+            m_title = nullptr;
+        }
+
+        m_membership = 0;
+        m_libRef     = -1;
+        m_shelfId[0] = 0;
+
+        if ( conIO(is) ){
+            std::cout << "Shelf No: ";
+            is.get(shelfid, SDDS_SHELF_ID_LEN+2);
+            if ( is.gcount() != SDDS_SHELF_ID_LEN ){
+                is.setstate(std::ios_base::failbit);        
+            }
+            else{
+                is.ignore(1000,'\n');
+            }
+
+            std::cout << "Title: ";
+            is.get(title,sizeof(title),'\n');
+            std::cout << "Date: ";
+            is  >> date;
+        }
+        else{
+            is >> libref;
+            is.ignore();         
+            is.get(shelfid,SDDS_SHELF_ID_LEN+1,'\t');
+            is.ignore();         
+            is.get(title,sizeof(title),'\t');
+            is.ignore();          
+            is >> membership;
+            is.ignore();          
+            is >> date;
+        }
+
+        if ( !date ){
+            is.setstate(std::ios_base::failbit);        
+        }
+
+        if ( is.good() ){                               
+            m_title = new char[std::strlen(title)+1];
+            std::strcpy ( m_title, title );
+
+            std::strcpy ( m_shelfId, shelfid );
+
+            m_membership = membership;
+
+            m_date = date;
+
+            m_libRef = libref;
+
+
+
+        }
+
+        return is;
+    }
 
 };
 

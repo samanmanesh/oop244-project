@@ -103,6 +103,7 @@ int main() {
          cout << (pd.onLoan() ? "|*" : "| ");
          cout.width(4);
          cout.fill(' ');
+
          cout.setf(ios::right);
          cout << row << (pd.onLoan()? "*": " ");
          cout.unsetf(ios::right);

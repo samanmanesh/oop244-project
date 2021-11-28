@@ -27,8 +27,8 @@ namespace sdds {
 
 		char* m_title{};
 		char m_shelfId[SDDS_SHELF_ID_LEN +1]{};
-		int m_membership = 0;
-		int m_libRef = -1;
+		int m_membership{};
+		int m_libRef{ -1 };
 		Date m_date;
 
 	public:
@@ -68,15 +68,17 @@ namespace sdds {
 		int getRef()const;
 		//Returns the libRef attirbute. 
 
-		bool conIO(std::ios& iosref)const;
+		bool conIO(const std::ios& iosref)const;
 
 		std::ostream& write(std::ostream& os) const;
 
-		std::istream& read(std::istream& istr);
+		//std::istream& read(std::istream& istr);
 
 		void setTodefaultValue();
 
 		operator bool() const;
+
+		std::istream& read(std::istream& is);
 	};
 };
 #endif
