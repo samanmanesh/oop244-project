@@ -72,13 +72,13 @@ namespace sdds {
 
 		std::ostream& write(std::ostream& os) const;
 
-		//std::istream& read(std::istream& istr);
+		std::istream& read(std::istream& is);
 
 		void setTodefaultValue();
 
 		operator bool() const;
 
-		std::istream& read(std::istream& is);
+		
 	};
 };
 #endif
