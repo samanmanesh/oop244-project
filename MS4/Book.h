@@ -22,6 +22,7 @@ namespace sdds {
 		char type()const;
 
 		std::ostream& write(std::ostream& os) const;
+		std::istream& read(std::istream& is);
 	};
 
 

@@ -73,4 +73,30 @@ namespace sdds {
 		return os;
 	}
 
+	istream& Book::read(std::istream& is) {
+		Publication::read(is);
+		char* authorName{};
+		
+		if(m_authorName || m_authorName[0]) delete[] m_authorName;
+		m_authorName = nullptr;
+		
+		if (Publication::conIO(is))
+		{
+			is.ignore();
+			cout << "Author: ";
+			authorName = Utils::dynRead(is);
+		}
+		else
+		{
+			is.ignore();
+			authorName = Utils::dynRead(is);
+		}
+
+		if (is.good())
+		{
+			Utils::delAlloCopy(m_authorName, authorName);
+		}
+		return is;
+	};
+
 }
