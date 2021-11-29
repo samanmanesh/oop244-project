@@ -21,7 +21,7 @@ namespace sdds {
 
 		char type()const;
 
-
+		std::ostream& write(std::ostream& os) const;
 	};
 
 

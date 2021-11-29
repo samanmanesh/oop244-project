@@ -48,4 +48,29 @@ namespace sdds {
 		return 'B';
 	};
 
+	ostream& Book::write(ostream& os) const {
+		Publication::write(os);
+		// or I shouod overload conIO for Book too
+		if (Publication::conIO(os)) {
+			
+			os << " ";
+			os.width(SDDS_AUTHOR_WIDTH);
+			if (Utils::strLen(m_authorName) > SDDS_AUTHOR_WIDTH) {
+				for (int i = 0; i <SDDS_AUTHOR_WIDTH; i++)
+				{
+					os << m_authorName[i];
+				}
+			}
+			else
+				os << m_authorName;
+			os << " |";
+		}
+		else
+		{
+			os << '\t' << m_authorName;
+		}
+
+		return os;
+	}
+
 }
