@@ -25,6 +25,8 @@ namespace sdds {
 		std::istream& read(std::istream& is);
 
 		void set(int member_id);
+
+		operator bool() const;
 	};
 
 

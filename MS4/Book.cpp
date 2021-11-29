@@ -104,5 +104,10 @@ namespace sdds {
 		Publication::resetDate();
 	};
 
+	Book::operator bool() const {
+	
+		return (m_authorName && m_authorName[0] && 
+			Publication:: operator bool());
+	};
 
 }
