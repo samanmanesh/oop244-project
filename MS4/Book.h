@@ -23,6 +23,8 @@ namespace sdds {
 
 		std::ostream& write(std::ostream& os) const;
 		std::istream& read(std::istream& is);
+
+		void set(int member_id);
 	};
 
 

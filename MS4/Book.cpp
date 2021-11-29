@@ -99,4 +99,10 @@ namespace sdds {
 		return is;
 	};
 
+	void Book::set(int member_id) {
+		Publication::set(member_id);
+		Publication::resetDate();
+	};
+
+
 }
