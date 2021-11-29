@@ -44,5 +44,8 @@ namespace sdds {
 		delete[] m_authorName;
 	}
 
+	char Book::type()const {
+		return 'B';
+	};
 
 }

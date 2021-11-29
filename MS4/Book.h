@@ -19,6 +19,9 @@ namespace sdds {
 		Book& operator=(const Book& B);
 		~Book();
 
+		char type()const;
+
+
 	};
 
 
