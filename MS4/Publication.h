@@ -78,7 +78,6 @@ namespace sdds {
 
 		operator bool() const;
 
-		
 	};
 };
 #endif
