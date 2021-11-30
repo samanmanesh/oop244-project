@@ -1,3 +1,21 @@
+/* Citation and Sources...
+Final Project Milestone 4
+Module: Book
+Filename: Book.cpp
+Version 1.0
+// Student Name  : Mohammadhossein Sobhanmanesh
+// Student ID    : 116523200
+// Student Email : msobhanmanesh@myseneca.ca
+// Date          : 2021-11-30
+// Course Section: OOP244-NAA
+-----------------------------------------------------------
+Date      Reason
+2020/11/13  Preliminary release
+2020/11/30  Debugged DMA
+-----------------------------------------------------------
+I have done all the coding by myself and only copied the code
+that my professor provided to complete my workshops and assignments.
+-----------------------------------------------------------*/
 
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
@@ -41,7 +59,6 @@ namespace sdds {
 
 	Book::~Book()
 	{
-		//Publication::~Publication();
 		delete[] m_authorName;
 	}
 
@@ -51,27 +68,6 @@ namespace sdds {
 
 	ostream& Book::write(ostream& os) const {
 		Publication::write(os);
-		// or I shouod overload conIO for Book too
-		//if (conIO(os)) {
-		//	
-		//	os << " ";
-		//	
-		//	if (Utils::strLen(m_authorName) > SDDS_AUTHOR_WIDTH) {
-		//		//os.width(SDDS_AUTHOR_WIDTH);
-		//		for (int i = 0; i <SDDS_AUTHOR_WIDTH; i++)
-		//		{
-		//			os << m_authorName[i];
-		//		}
-		//	}
-		//	else
-
-		//		os << m_authorName;
-		//	os << " |";
-		//}
-		//else
-		//{
-		//	os << '\t' << m_authorName;
-		//}
 		if (conIO(os)) {
 
 			char author[SDDS_AUTHOR_WIDTH + 1] = { 0 };
@@ -89,29 +85,7 @@ namespace sdds {
 	}
 
 	istream& Book::read(std::istream& is) {
-		/*Publication::read(is);
-		char* authorName{};
 		
-		
-		delete[] m_authorName;
-		m_authorName = nullptr;
-		
-		if (conIO(is))
-		{
-			is.ignore();
-			cout << "Author: ";
-			authorName = Utils::dynRead(is);
-		}
-		else
-		{
-			is.ignore();
-			authorName = Utils::dynRead(is);
-		}
-
-		if (is.good())
-		{
-			Utils::delAlloCopy(m_authorName, authorName);
-		}*/
 		char authorName[256] = { 0 };
 
 		Publication::read(is);                           
@@ -140,7 +114,7 @@ namespace sdds {
 
 	void Book::set(int member_id) {
 		Publication::set(member_id);
-		resetDate();
+		Publication::resetDate();
 	};
 
 	Book::operator bool() const {

@@ -2,8 +2,12 @@
 // OOP244 Utils Module
 // File	Utils.cpp
 // Version 2
-// Date	2020/11/27
-// Author	Mohammadhossein Sobhanmanesh
+// Date	2020/11/30
+// Student Name  : Mohammadhossein Sobhanmanesh
+// Student ID    : 116523200
+// Student Email : msobhanmanesh@myseneca.ca
+// Date          : 2021-11-30
+// Course Section: OOP244-NAA
 // Description
 //
 // Revision History

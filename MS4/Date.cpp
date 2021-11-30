@@ -3,7 +3,11 @@ Final Project Milestone 3
 Module: Date
 Filename: Date.cpp
 Version 1.0
-Author	Mohammadhossein Sobhanmanesh
+// Student Name  : Mohammadhossein Sobhanmanesh
+// Student ID    : 116523200
+// Student Email : msobhanmanesh@myseneca.ca
+// Date          : 2021-11-30
+// Course Section: OOP244-NAA
 Revision History
 -----------------------------------------------------------
 Date      Reason
