@@ -108,20 +108,26 @@ namespace sdds {
 	ostream& Publication::write(ostream& os) const {
 
 		if (conIO(os)) {
+
+			char titleToShow[SDDS_TITLE_WIDTH + 1] = { 0 };
+
+			std::strncpy(titleToShow, m_title, SDDS_TITLE_WIDTH);
+
 			os << "| ";
 			os << m_shelfId;
 			os << " | ";
-			os.setf(ios::left);
 			os.fill('.');
 			os.width(SDDS_TITLE_WIDTH);
-			os << m_title;
+			os.setf(ios::left);
+			os << titleToShow;
 			os.unsetf(ios::left);
-			os.fill(' ');
+			
 			os << " | ";
 			(m_membership != 0) ? os << m_membership : os << " N/A ";
 			os << " | ";
 			os << m_date;
 			os << " |";
+			os.fill(' ');
 		}
 		else
 		{
@@ -142,7 +148,7 @@ namespace sdds {
 
 	void Publication::setTodefaultValue() {
 		delete[] m_title;
-		m_title = nullptr;
+		m_title = nullptr; 
 
 		m_shelfId[0] = '\0';
 		m_membership = 0;
@@ -217,7 +223,7 @@ namespace sdds {
 
 	Publication::operator bool() const {
 
-		return m_title && m_shelfId[0];
+		return m_title && m_title[0];
 	};
 
 

@@ -27,6 +27,8 @@ namespace sdds {
 		void set(int member_id);
 
 		operator bool() const;
+
+		//bool conIO(const std::ios& iosref)const;
 	};
 
 
