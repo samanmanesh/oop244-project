@@ -40,7 +40,7 @@ namespace sdds {
 
 	Book::~Book()
 	{
-		Publication::~Publication();
+		//Publication::~Publication();
 		delete[] m_authorName;
 	}
 
@@ -54,7 +54,7 @@ namespace sdds {
 		if (Publication::conIO(os)) {
 			
 			os << " ";
-			os.width(SDDS_AUTHOR_WIDTH);
+			//os.width(SDDS_AUTHOR_WIDTH);
 			if (Utils::strLen(m_authorName) > SDDS_AUTHOR_WIDTH) {
 				for (int i = 0; i <SDDS_AUTHOR_WIDTH; i++)
 				{
@@ -74,10 +74,11 @@ namespace sdds {
 	}
 
 	istream& Book::read(std::istream& is) {
-		Publication::read(is);
 		char* authorName{};
+		Publication::read(is);
 		
-		if(m_authorName || m_authorName[0]) delete[] m_authorName;
+		
+		delete[] m_authorName;
 		m_authorName = nullptr;
 		
 		if (Publication::conIO(is))
@@ -106,8 +107,7 @@ namespace sdds {
 
 	Book::operator bool() const {
 	
-		return (m_authorName && m_authorName[0] && 
-			Publication:: operator bool());
+		return m_authorName && m_authorName[0] && Publication:: operator bool();
 	};
 
 }
