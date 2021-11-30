@@ -124,7 +124,7 @@ namespace sdds {
 			os.width(SDDS_TITLE_WIDTH);
 			os.setf(ios::left);
 			os << titleToShow;
-			os.unsetf(ios::left);
+			
 			
 			os << " | ";
 			(m_membership != 0) ? os << m_membership : os << " N/A ";
@@ -132,6 +132,7 @@ namespace sdds {
 			os << m_date;
 			os << " |";
 			os.fill(' ');
+			os.unsetf(ios::left);
 		}
 		else
 		{

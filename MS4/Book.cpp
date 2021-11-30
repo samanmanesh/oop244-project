@@ -73,10 +73,11 @@ namespace sdds {
 			char author[SDDS_AUTHOR_WIDTH + 1] = { 0 };
 
 			std::strncpy(author, m_authorName, SDDS_AUTHOR_WIDTH);
-
+			os.setf(ios::left);
 			os << " ";
 			os.width(SDDS_AUTHOR_WIDTH);
 			os<< author<< " |";
+			os.unsetf(ios::left);
 		}
 		else {
 			os << "\t"<< m_authorName;
