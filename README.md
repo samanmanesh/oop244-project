@@ -13,7 +13,9 @@
 | --- | [V1.1](#ms3-v11) | | corrected zero to empty string |
 | --- | [V1.1.1](#ms3-v111) | | Added output sample for membership being 0  |
 | [MS4](#milestone-4) | V1.0  | [Watch](https://www.youtube.com/watch?v=0yiEqHOwhEA) | Initial Post |
-| [MS5](#milestone-5)<br />(Final Milestone) | V0.9 | |Initial post|
+| [MS5](#milestone-5)<br />(Final Milestone) | V0.9 | [Watch](https://www.youtube.com/watch?v=A7WMEJWFYT4) |Initial post|
+| | V1.0 | |Submissions opened |
+| | [V1.1](#ms5-v11) | | Explained the return value of search function |
 
 When Books and other publications arrive in the Seneca library, they should be tagged and put on shelves, so they are easily retrievable to be lent out to those who need them. 
 Your task is to design an application that receives the publications and stores them into the system with the information needed for their retrieval. 
@@ -31,12 +33,23 @@ This project will be done in 5 milestones and each milestone will have its due d
 | MS2 | 10% | Nov 15th | gets full mark even if 1 week late. gets 0% afterwards|
 | MS3 | 10% | Nov 22nd | gets full mark even if 1 week late. gets 0% afterwards|
 | MS4 | 10% | Nov 27th  | gets full mark even if 1 week late. gets 0% afterwards|
-| MS5 (Final Milestone) | 60% | Dec 6th| 10% penalty for each day being late up to 5 days|
+| MS5 | 60% | Dec 7th  | See below|
+
+> To make the final submission of the project easier and to make it possible to partially submit a project we have divided the submission of milestone 5 into six small ones. Each submission is worth 10% of the project mark. Your project will be marked only if you have all four milestones and at least have one of the 6 six submissions of milestone 5. 
+
+|Milestone 5<br/> Divided into<br/>Six submission| Mark | Due date | Submission Policy|
+|:------|:---:|:---:|-------|
+| m51 (add) | 10% | Dec 7th| 10% penalty for each day being late up to 5 days|
+| m52 (remove) | 10% | Dec 7th| 10% penalty for each day being late up to 5 days|
+| m53 (checkout) | 10% | Dec 7th| 10% penalty for each day being late up to 5 days|
+| m54 (return) | 10% | Dec 7th| 10% penalty for each day being late up to 5 days|
+| m55 (Load Capacity) | 10% | Dec 7th| 10% penalty for each day being late up to 5 days|
+| m56 (foolproofing) | 10% | Dec 7th| 10% penalty for each day being late up to 5 days|
 
 > The first 4 milestones will not be marked based on the code, but their success and their timely submissions. You may modify or debug your previous code as you are going through the milestones. The only milestone that is going to scrutinized based your code will be milestone 5. If you require any feedback on your first four milestones you need to ask your professor to do so.
 
 ***NOTE:***<br/>
-**Your project will receive a mark of zero if any of the milestones are not submitted by the rejection date (December 12th, 23:59 )**
+**Your project will receive a mark of zero if any of the milestones are not submitted by the rejection date (December 12th, 23:59 )<br />For your project to be marked, you must submit all the 4 milestones and at least one of the 6 submissions of Milestone 5**
 
 You can check the due date of each milestone using the ```-due``` flag in the submission command:
 ```bash
@@ -1844,8 +1857,8 @@ First, get the type of publication to search for from the user. (user the type s
 Then print `"Publication Title: "` and get the title to search the PPA for. (up to 256 characters)
 
 Go through all the publications in the PPA and base on the method of search (all the items, on loan items or available ones) check each element and if the publication (pointed by the PPA element) is not deleted and type matches the selection of the user and the title contains the title the user entered, insert it into the PublicationSelector object. 
-
-If matches are found, sort the result and get the user's selection. If not print "No matches found!"
+#### MS5 V1.1
+If matches are found, sort the result and get the user's selection ***and return the library reference number***. If not print "No matches found!"
 
 If the user aborts at any stage print "Aborted!"
 
@@ -2013,7 +2026,7 @@ Publication removed
 - print: `"Checkout publication from the library"`
 - Search in available publications only
 - If the user selects a publication and confirms to checkout using the prompt: `"Check out publication?"`
-   - read a 5 digit number from the console
+   - read a 5 digit number from the console, if invalid print: `"Invalid membership number, try again: "` and read again
    - set the membership number of the selected publication the integer value. 
    - set the changed flag to true
    - print: `"Publication checked out"`
@@ -2103,8 +2116,245 @@ Add the following to the constructor:
 
 ## MS5 Sample execution
 
-TBA (pending since matrix is not responsive at the moment)
+### Milestone 5 Test One  (m51)
+
+Data file: [LibRecsSmall.txt](MS5/LibRecsSmall.txt)
+
+- load
+- Book and Publication entry
+- setting the library reference number
+- save
+
+Data Entry:
+```Text
+1
+1
+S001
+Book one
+2020/10/10
+John Doe
+1
+1
+2
+S002
+Daily one
+2020/10/10
+1
+0
+1
+```
+[Correct Output](MS5/m51_correct_output.md)
+
+### Milestone 5 Test Two  (m52)
+
+Data file: [LibRecsSmall.txt](MS5/LibRecsSmall.txt)
+
+- load
+- Removing Publication and Book
+- save
+
+Data Entry:
+```Text
+2
+1
+e
+3
+1
+2
+2
+e
+3
+1
+0
+1
+```
+[Correct Output](MS5/m52_correct_output.md)
+
+### Milestone 5 Test Three (m53)
+
+Data file: [LibRecsSmall.txt](MS5/LibRecsSmall.txt)
+
+- load
+- Checking out and no match found
+- Checking out with success
+- save
+
+Data Entry:
+``` Text
+3
+1
+Harry
+3
+1
+Web
+1
+1
+12345
+0
+1
+```
+
+[Correct Output](MS5/m53_correct_output.md)
+
+### Milestone 5 Test Four (m54)
+
+Data file: [LibRecsSmall.txt](MS5/LibRecsSmall.txt)
+
+- load
+- Returning a Book with no penalty
+- Returning a Book with penalty
+- Returning a Publication
+- save
+
+Data Entry:
+```Text
+4
+1
+Harry
+1
+1
+4
+1
+Hobbit
+1
+1
+4
+2
+e
+2
+1
+0
+1
+```
+
+
+[Correct Output](MS5/m54_correct_output.md)
+
+### Milestone 5 Test Five  (m55)
+
+Data file: [LibRecs.txt](MS5/LibRecs.txt)
+
+>Before starting this this test make sure that in "Lib.h" <br />
+The maximum capacity of the library is set to 333. <br />`>>  const int SDDS_LIBRARY_CAPACITY = 333;  <<`
+
+- load
+- Adding a publication
+- Add another publication unsuccessfully
+- save
+
+Data Entry:
+```Text
+1
+2
+S003
+News Daily
+2021/11/30
+1
+1
+0
+1
+```
+
+[Correct Output](MS5/m55_correct_output.md)
+
+### Milestone 5 Test Six (m56)
+
+Data file: [LibRecs.txt](MS5/LibRecs.txt)
+
+- load
+- Aborting and error handling
+- exit without saving
+
+Data Entry:
+```Text
+1
+0
+2
+2
+<ENTER>
+x
+3
+1
+<ETNER>
+1
+1
+123456
+12345
+4
+2
+<ENTER>
+x
+0
+0
+1
+```
+
+[Correct Output](MS5/m56_correct_output.md)  
 
 ## MS5 Submission
 
-TBA (pending since matrix is not responsive at the moment)
+For marking see [Final Project Mark and Due dates](#final-project-mark-and-due-dates)
+
+Files to upload to matrix:
+```Text
+Lib.h
+Utils.cpp
+Utils.h
+Date.cpp
+Date.h
+Menu.cpp
+Menu.h
+Streamable.cpp
+Streamable.h
+Publication.cpp
+Publication.h
+Book.cpp
+Book.h
+PublicationSelector.cpp
+PublicationSelector.h
+LibApp.cpp
+LibApp.h
+LibAppMain.cpp
+LibRecsSmall.txt
+LibRecs.txt
+```
+
+Upload all the source code , the tester program and the data files to your `matrix` account. Compile and run your code using the `g++` compiler [as shown in the introduction](#compiling-and-testing-your-program) and make sure that everything works properly.
+
+Then, run the following commands from your account (replace `profname.proflastname` with your professor’s Seneca userid):
+
+Each successful submission will earn you 10% of the prject mark (and with 4 submissions of milestones the total will be 100%)
+
+```
+~profname.proflastname/submit 2??/prj/m51
+~profname.proflastname/submit 2??/prj/m52
+~profname.proflastname/submit 2??/prj/m53
+~profname.proflastname/submit 2??/prj/m54
+~profname.proflastname/submit 2??/prj/m55
+~profname.proflastname/submit 2??/prj/m56
+```
+and follow the instructions.
+
+- *2??* is replaced with your subject code
+
+### The submit program's options:
+
+```bash
+~prof_name.prof_lastname/submit DeliverableName [-submission options]<ENTER>
+[-submission option] acceptable values:
+  "-due":
+       Shows due dates only
+       This option cannot be used in combination with any other option.
+  "-skip_spaces":
+       Do the submission regardless of incorrect horizontal spacing.
+       This option may attract penalty.
+  "-skip_blank_lines":
+       Do the submission regardless of incorrect vertical spacing.
+       This option may attract penalty.
+  "-feedback":
+       Check the program execution without submission.
+```
+
+## [Back to milestones](#milestones)
+
+
