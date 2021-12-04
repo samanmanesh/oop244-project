@@ -338,6 +338,13 @@ namespace sdds {
 		cout << "Thanks for using Seneca Library Application" << endl;
 
 	};
-
+	Publication* LibApp::getPub(int libRef) {
+		Publication* result = nullptr;
+		for (int i = 0; i < m_NOLP; i++)
+		{
+			if (m_PPA[i]->getRef() == libRef) result = m_PPA[i];
+		}
+		return result;
+	}
 
 }

@@ -59,6 +59,8 @@ namespace sdds {
 		LibApp();
 		~LibApp();
 		void run();
+
+		Publication* getPub(int libRef);
 	};
 
 }
