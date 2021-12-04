@@ -82,7 +82,7 @@ namespace sdds {
 		cout << "Saving Data" << endl;
 		ofstream onfile("LibRecs.txt");
 		int i;
-		for ( i = 0; i < m_NOLP; i++)
+		for (i = 0; i < m_NOLP; i++)
 		{
 			if (m_PPA[i]->getRef() != 0)
 			{
@@ -93,18 +93,166 @@ namespace sdds {
 
 	};
 
-	void LibApp::search() {
+	int LibApp::search(int typeOfSearch) { // recive if all as(1), on loan as (2), not on loan as (3)
 		cout << "Searching for publication" << endl;
+		PublicationSelector PBS("Select one of the following found matches:", 15);
+		int selectedPubType = 0;
+		char title[256]{};
+		int libRef{};
+		//switch (typeOfSearch)
+		//{
+		//case 1:
+		//	//search all
+		//	selectedPubType = m_pubType.run();
+		//	break;
+		//case 2:
+		//	//search on loan
+		//	selectedPubType = m_pubType.run();
+		//	
+		//	break;
+		//case 3:
+		//	//search not on loan
+		//	selectedPubType = m_pubType.run();
+
+
+		//	break;
+		//default :
+		//	break;
+		//}
+
+		selectedPubType = m_pubType.run();
+
+		if (selectedPubType != 0)
+		{
+			cout << "Publication Title: ";
+			cin.getline(title, 256);
+
+			if (typeOfSearch == 1)
+			{
+				if (selectedPubType == 1)
+				{
+					for (int i = 0; i < m_NOLP; i++)
+					{
+						const char taypeOfPPA = m_PPA[i]->type();
+
+						if (taypeOfPPA == 'B' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title)) {
+
+							PBS << m_PPA[i];
+						}
+
+					}
+
+				}
+				else if (selectedPubType == 2)
+				{
+					for (int i = 0; i < m_NOLP; i++)
+					{
+						const char taypeOfPPA = m_PPA[i]->type();
+
+						if (taypeOfPPA == 'P' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title))
+						{
+							PBS << m_PPA[i];
+						};
+					}
+				}
+				else if (selectedPubType == 0)
+				{
+					cout << "Aborted!" << endl;
+				}
+
+			}
+			else if (typeOfSearch == 2) {
+
+				if (selectedPubType == 1)
+				{
+					for (int i = 0; i < m_NOLP; i++)
+					{
+						const char taypeOfPPA = m_PPA[i]->type();
+						int loanStuts = m_PPA[i]->onLoan();
+
+						if (!loanStuts && taypeOfPPA == 'B' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title)) {
+
+							PBS << m_PPA[i];
+						}
+					}
+				}
+				else if (selectedPubType == 2)
+				{
+					for (int i = 0; i < m_NOLP; i++)
+					{
+						const char taypeOfPPA = m_PPA[i]->type();
+						int loanStuts = m_PPA[i]->onLoan();
+
+						if (!loanStuts && taypeOfPPA == 'P' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title))
+						{
+							PBS << m_PPA[i];
+						};
+					}
+				}
+				else if (selectedPubType == 0)
+				{
+					cout << "Aborted!" << endl;
+				}
+
+			}
+			else if (typeOfSearch == 3) {
+
+				if (selectedPubType == 1)
+				{
+					for (int i = 0; i < m_NOLP; i++)
+					{
+						const char taypeOfPPA = m_PPA[i]->type();
+						int loanStuts = m_PPA[i]->onLoan();
+
+						if (!loanStuts && taypeOfPPA == 'B' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title)) {
+
+							PBS << m_PPA[i];
+						}
+					}
+				}
+				else if (selectedPubType == 2)
+				{
+					for (int i = 0; i < m_NOLP; i++)
+					{
+						const char taypeOfPPA = m_PPA[i]->type();
+						int loanStuts = m_PPA[i]->onLoan();
+
+						if (!loanStuts && taypeOfPPA == 'P' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title))
+						{
+							PBS << m_PPA[i];
+						};
+					}
+				}
+				else if (selectedPubType == 0)
+				{
+					cout << "Aborted!" << endl;
+				}
+			}
+		}
+		else if (selectedPubType == 0) cout << "Aborted!" << endl;
+		
+		if (selectedPubType != 0 && PBS) // matches is found
+		{
+			PBS.sort();
+			libRef= PBS.run();
+		}
+		else
+		{
+			cout << "No matches found!" << endl;
+		}
+		return libRef;
 	};
 
 	void LibApp::returnPub() {
-		search();
+		search(1);
 		cout << "Returning publication" << endl;
 		cout << "Publication returned" << endl;
 		m_changed = true;
 	};
 
-	LibApp::~LibApp() {};
+	LibApp::~LibApp() {
+		delete[] m_PPA;
+	};
 
 	void LibApp::newPublication() {
 		cout << "Adding new publication to library" << endl;
@@ -118,7 +266,7 @@ namespace sdds {
 
 	void LibApp::removePublication() {
 		cout << "Removing publication from library" << endl;
-		search();
+		search(1);
 
 		if (confirm("Remove this publication from the library?")) {
 
@@ -128,7 +276,7 @@ namespace sdds {
 	};
 
 	void LibApp::checkOutPub() {
-		search();
+		search(1);
 		if (confirm("Check out publication?")) {
 
 			m_changed = true;

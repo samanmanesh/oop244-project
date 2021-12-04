@@ -19,6 +19,7 @@ that my professor provided to complete my workshops and assignments.
 #include "Menu.h"
 #include "Publication.h"
 #include "Book.h"
+#include "PublicationSelector.h"
 namespace sdds {
 	class LibApp {
 
@@ -39,8 +40,9 @@ namespace sdds {
 
 		void load();  // prints: "Loading Data"<NEWLINE>
 		void save();  // prints: "Saving Data"<NEWLINE>
-		void search();  // prints: "Searching for publication"<NEWLINE>
-
+		//void search();  // prints: "Searching for publication"<NEWLINE>
+		int search(int typeOfSearch); // recive if all as(1), onloan as (2), notOnloan as (3)
+		
 		void returnPub();  /*  Calls the search() method.
 							   prints "Returning publication"<NEWLINE>
 							   prints "Publication returned"<NEWLINE>
