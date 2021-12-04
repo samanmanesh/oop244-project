@@ -18,6 +18,7 @@ that my professor provided to complete my workshops and assignments.
 #define SDDS_LIBAPP_H
 #include "Menu.h"
 #include "Publication.h"
+#include "Book.h"
 namespace sdds {
 	class LibApp {
 
@@ -27,10 +28,10 @@ namespace sdds {
 
 		char pubDataFileName[256]{};
 		
-		char* m_PPA{}; //Publication Pointers Array "PPA"
+		Publication* m_PPA[SDDS_LIBRARY_CAPACITY]{}; //Publication Pointers Array "PPA"
 		
-		int m_NOLP{}; // We will call this attribute "NOLP" for short, from now on.
-		int m_LLRN{}; //We will call this attribute "LLRN" for short, from now on.
+		int m_NOLP{}; // Number Of Loaded Publications  "NOLP" for short
+		int m_LLRN{}; //Last Library Reference Number "LLRN" for short
 
 		Menu m_pubType;
 

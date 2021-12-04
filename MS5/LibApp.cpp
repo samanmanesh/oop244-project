@@ -18,6 +18,7 @@ that my professor provided to complete my workshops and assignments.
 #include <cstring>
 #include "LibApp.h"
 #include"Utils.h"
+#include <fstream>
 using namespace std;
 using namespace sdds;
 
@@ -25,10 +26,14 @@ namespace sdds {
 
 
 	LibApp::LibApp() :m_changed(false), m_mainMenu("Seneca Library Application"
-	), m_exitMenu("Changes have been made to the data, what would you like to do?") {
+	), m_exitMenu("Changes have been made to the data, what would you like to do?"), m_pubType("Choose the type of publication:") {
+
 		m_mainMenu << "Add New Publication" << "Remove Publication" << "Checkout publication from library" << "Return publication to library";
 		;
 		m_exitMenu << "Save changes and exit" << "Cancel and go back to the main menu";
+
+		m_pubType << "Book" << "Publication";
+
 		load();
 	};
 
@@ -48,6 +53,29 @@ namespace sdds {
 
 	void LibApp::load() {
 		cout << "Loading Data" << endl;
+		ifstream infile("LibRecs.txt");
+		char type{};
+		int i;
+		for (i = 0; infile && SDDS_LIBRARY_CAPACITY; i++) {
+			infile >> type;
+			infile.ignore();
+
+			if (infile) {
+				if (type == 'P')
+					m_PPA[i] = new Publication;
+
+				else if (type == 'B')
+					m_PPA[i] = new Book;
+			}
+
+			if (m_PPA[i])
+			{
+				infile >> *m_PPA[i];
+				m_NOLP++;
+				//m_LLRN = m_PPA[i]->getRef();
+			}
+		}
+		m_LLRN = m_PPA[m_NOLP]->getRef();
 	};
 
 	void LibApp::save() {
