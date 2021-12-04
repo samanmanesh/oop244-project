@@ -80,6 +80,17 @@ namespace sdds {
 
 	void LibApp::save() {
 		cout << "Saving Data" << endl;
+		ofstream onfile("LibRecs.txt");
+		int i;
+		for ( i = 0; i < m_NOLP; i++)
+		{
+			if (m_PPA[i]->getRef() != 0)
+			{
+				onfile << *m_PPA[i];
+				//onfile << m_PPA[i];
+			}
+		}
+
 	};
 
 	void LibApp::search() {
