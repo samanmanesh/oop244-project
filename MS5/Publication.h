@@ -26,6 +26,7 @@ that my professor provided to complete my workshops and assignments.
 #include "Streamable.h"
 #include "Utils.h"
 #include "Lib.h"
+
 namespace sdds {
 
 	class Publication : public Streamable {

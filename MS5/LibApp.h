@@ -17,13 +17,22 @@ that my professor provided to complete my workshops and assignments.
 #ifndef SDDS_LIBAPP_H
 #define SDDS_LIBAPP_H
 #include "Menu.h"
-
+#include "Publication.h"
 namespace sdds {
 	class LibApp {
 
 		bool m_changed;
 		Menu m_mainMenu;
 		Menu m_exitMenu;
+
+		char pubDataFileName[256]{};
+		
+		char* m_PPA{}; //Publication Pointers Array "PPA"
+		
+		int m_NOLP{}; // We will call this attribute "NOLP" for short, from now on.
+		int m_LLRN{}; //We will call this attribute "LLRN" for short, from now on.
+
+		Menu m_pubType;
 
 		bool confirm(const char* message);
 
