@@ -259,10 +259,15 @@ namespace sdds {
 		libRef = search(2); // search for on loan publication
 
 		if (libRef && confirm("Return Publication?")) {
+			
+			Publication* pbs = getPub(libRef);
 
-			if (m_PPA[libRef]->checkoutDate() > SDDS_MAX_LOAN_DAYS) {
+			int daysOnloan = Date() - pbs->checkoutDate();
 
-				int extraDays = m_PPA[libRef]->checkoutDate() - SDDS_MAX_LOAN_DAYS;
+
+			if (daysOnloan > SDDS_MAX_LOAN_DAYS) {
+
+				int extraDays = daysOnloan - SDDS_MAX_LOAN_DAYS;
 				int penalty = extraDays * (50 / 100);
 
 				cout << "Please pay $" << penalty << " penalty for being " << extraDays << " days late!" << endl;

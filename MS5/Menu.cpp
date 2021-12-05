@@ -9,7 +9,7 @@ Version 1.0
 // Date          : 2021-12-5
 // Course Section: OOP244-NAA
 -----------------------------------------------------------
-/* Citation and Sources...
+Citation and Sources...
 Final Project Milestone 2
 Module: Menu
 Filename: Menu.cpp
