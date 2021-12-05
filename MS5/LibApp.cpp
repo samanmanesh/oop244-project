@@ -178,7 +178,7 @@ namespace sdds {
 						const char taypeOfPPA = m_PPA[i]->type();
 						int loanStatus = m_PPA[i]->onLoan();
 
-						if (!loanStatus && taypeOfPPA == 'B' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title)) {
+						if (loanStatus && taypeOfPPA == 'B' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title)) {
 
 							PBS << m_PPA[i];
 						}
@@ -191,7 +191,7 @@ namespace sdds {
 						const char taypeOfPPA = m_PPA[i]->type();
 						int loanStatus = m_PPA[i]->onLoan();
 
-						if (!loanStatus && taypeOfPPA == 'P' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title))
+						if (loanStatus && taypeOfPPA == 'P' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title))
 						{
 							PBS << m_PPA[i];
 						};
@@ -276,11 +276,15 @@ namespace sdds {
 			if (daysOnloan > SDDS_MAX_LOAN_DAYS) {
 
 				int extraDays = daysOnloan - SDDS_MAX_LOAN_DAYS;
-				int penalty = extraDays * (50 / 100);
+				double penalty = extraDays * 0.5;
 
-				cout << "Please pay $" << penalty << " penalty for being " << extraDays << " days late!" << endl;
+				cout << "Please pay $";
+				cout.setf(ios::fixed);
+				cout.precision(2);
+				cout << penalty << " penalty for being " << extraDays << " days late!" << endl;
 			}
-			m_PPA[libRef]->set(0);
+			//m_PPA[libRef]->set(0);
+			pbs->set(0);
 			m_changed = true;
 			cout << "Publication returned" << endl;
 		}
