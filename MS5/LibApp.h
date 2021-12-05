@@ -27,7 +27,7 @@ namespace sdds {
 		Menu m_mainMenu;
 		Menu m_exitMenu;
 
-		char pubDataFileName[256]{};
+		char m_fileName[256]{};
 		
 		Publication* m_PPA[SDDS_LIBRARY_CAPACITY]{}; //Publication Pointers Array "PPA"
 		
@@ -56,7 +56,7 @@ namespace sdds {
 
 	public:
 
-		LibApp();
+		LibApp(char* fileName);
 		~LibApp();
 		void run();
 

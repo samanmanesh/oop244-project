@@ -25,8 +25,10 @@ using namespace sdds;
 namespace sdds {
 
 
-	LibApp::LibApp() :m_changed(false), m_mainMenu("Seneca Library Application"
-	), m_exitMenu("Changes have been made to the data, what would you like to do?"), m_pubType("Choose the type of publication:") {
+	LibApp::LibApp(char* fileName) :m_changed(false), m_mainMenu("Seneca Library Application"
+	), m_exitMenu("Changes have been made to the data, what would you like to do?"), m_pubType("Choose the type of publication:"){
+
+		Utils::strCpy(m_fileName, fileName);
 
 		m_mainMenu << "Add New Publication" << "Remove Publication" << "Checkout publication from library" << "Return publication to library";
 		;
