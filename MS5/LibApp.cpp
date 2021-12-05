@@ -379,7 +379,7 @@ namespace sdds {
 		cout << "Checkout publication from the library" << endl;
 		libRef = search(3);// available publication only(not on loan)
 
-		if (libRef && confirm("Check out publication ?")) {
+		if (libRef && confirm("Check out publication?")) {
 
 			cout << "Enter Membership number: ";
 			membership = Utils::getInt(10000, 99999, "Invalid membership number, try again: ");
