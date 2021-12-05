@@ -344,13 +344,26 @@ namespace sdds {
 	};
 
 	void LibApp::checkOutPub() {
-		search(1);
+		/*search();
 		if (confirm("Check out publication?")) {
 			
 
 			m_changed = true;
 			cout << "Publication checked out" << endl;
-		}
+		}*/
+		int membership{};
+		int libRef{};
+		cout << "Checkout publication from the library" << endl;
+		libRef=search(3);// available publication only(not on loan)
+		if (confirm("Check out publication ?")) {
+			
+			membership = Utils::getInt(10000, 99999, "Invalid membership number, try again: ");
+			
+			m_PPA[libRef]->set(membership);
+
+			m_changed = true;
+			cout << "Publication checked out" << endl;
+		};
 	};
 
 
