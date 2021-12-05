@@ -25,27 +25,27 @@ using namespace sdds;
 namespace sdds {
 
 
-	LibApp::LibApp(const char* fileName) 
+	LibApp::LibApp(const char* fileName)
 		:m_changed(false),
-		 m_mainMenu("Seneca Library Application"), 
-		 m_exitMenu("Changes have been made to the data, what would you like to do?"), 
-		 m_pubType("Choose the type of publication:") {
+		m_mainMenu("Seneca Library Application"),
+		m_exitMenu("Changes have been made to the data, what would you like to do?"),
+		m_pubType("Choose the type of publication:") {
 
 		if (fileName)
 		{
 			Utils::strCpy(m_fileName, fileName);
 		}
-	
-		m_mainMenu << "Add New Publication" 
-				   << "Remove Publication" 
-				   << "Checkout publication from library" 
-				   << "Return publication to library";
-		
-		m_exitMenu << "Save changes and exit" 
-			       << "Cancel and go back to the main menu";
+
+		m_mainMenu << "Add New Publication"
+			<< "Remove Publication"
+			<< "Checkout publication from library"
+			<< "Return publication to library";
+
+		m_exitMenu << "Save changes and exit"
+			<< "Cancel and go back to the main menu";
 
 		m_pubType << "Book"
-			      << "Publication";
+			<< "Publication";
 
 		load();
 	};
@@ -95,8 +95,8 @@ namespace sdds {
 			}
 			infile.ignore(1000, '\n');
 		}
-		if(m_NOLP)
-		m_LLRN = m_PPA[m_NOLP-1]->getRef();
+		if (m_NOLP)
+			m_LLRN = m_PPA[m_NOLP - 1]->getRef();
 	};
 
 	void LibApp::save() {
@@ -107,7 +107,7 @@ namespace sdds {
 		{
 			if (m_PPA[i]->getRef() != 0)
 			{
-				onfile << *m_PPA[i];
+				onfile << *m_PPA[i] << endl;;
 				//onfile << m_PPA[i];
 			}
 		}
@@ -115,31 +115,12 @@ namespace sdds {
 	};
 
 	int LibApp::search(int typeOfSearch) { // recive if all as(1), on loan as (2), not on loan as (3)
-		//cout << "Searching for publication" << endl;
+		
 		PublicationSelector PBS("Select one of the following found matches:", 15);
 		int selectedPubType = 0;
 		char title[256]{};
 		int libRef{};
-		//switch (typeOfSearch)
-		//{
-		//case 1:
-		//	//search all
-		//	selectedPubType = m_pubType.run();
-		//	break;
-		//case 2:
-		//	//search on loan
-		//	selectedPubType = m_pubType.run();
-		//	
-		//	break;
-		//case 3:
-		//	//search not on loan
-		//	selectedPubType = m_pubType.run();
-
-
-		//	break;
-		//default :
-		//	break;
-		//}
+		bool aborted = true;
 
 		selectedPubType = m_pubType.run();
 
@@ -162,7 +143,7 @@ namespace sdds {
 						}
 
 					}
-
+					aborted = false;
 				}
 				else if (selectedPubType == 2)
 				{
@@ -175,10 +156,11 @@ namespace sdds {
 							PBS << m_PPA[i];
 						};
 					}
+					aborted = false;
 				}
 				else if (selectedPubType == 0)
 				{
-					cout << "Aborted!" << endl;
+					//cout << "Aborted!" << endl;
 				}
 
 			}
@@ -209,10 +191,11 @@ namespace sdds {
 							PBS << m_PPA[i];
 						};
 					}
+					aborted = false;
 				}
 				else if (selectedPubType == 0)
 				{
-					cout << "Aborted!" << endl;
+					//cout << "Aborted!" << endl;
 				}
 
 			}
@@ -230,6 +213,7 @@ namespace sdds {
 							PBS << m_PPA[i];
 						}
 					}
+					aborted = false;
 				}
 				else if (selectedPubType == 2)
 				{
@@ -243,24 +227,36 @@ namespace sdds {
 							PBS << m_PPA[i];
 						};
 					}
+					aborted = false;
 				}
 				else if (selectedPubType == 0)
 				{
-					cout << "Aborted!" << endl;
+					//cout << "Aborted!" << endl;
 				}
 			}
 		}
-		else if (selectedPubType == 0) cout << "Aborted!" << endl;
+		else if (selectedPubType == 0) //cout << "Aborted!" << endl; 
+			aborted = false;
 
 		if (selectedPubType != 0 && PBS) // matches is found
 		{
 			PBS.sort();
 			libRef = PBS.run();
+
+			if (libRef > 0)
+			{
+				cout << *getPub(libRef) << endl;
+				aborted = false;
+			}
 		}
 		else
 		{
 			cout << "No matches found!" << endl;
 		}
+
+		if (aborted)
+			cout << "Aborted!" << endl;
+
 		return libRef;
 	};
 
@@ -293,128 +289,135 @@ namespace sdds {
 	};
 
 	void LibApp::newPublication() {
-		/*cout << "Adding new publication to library" << endl;
-
-		if (confirm("Add this publication to library?"))
-		{
-			m_changed = true;
-			cout << "Publication added" << endl;
-		}*/
-
-		int type = 0;
-		Publication* dynPublication{};
-
 		if (m_NOLP == SDDS_LIBRARY_CAPACITY)
 		{
 			cout << "Library is at its maximum capacity!" << endl;
+			return;
 		}
-		else
+
+		cout << "Adding new publication to the library" << endl;
+
+		Publication* dynPublication{};
+		int type = m_pubType.run();
+		bool aborted = true;
+		do
 		{
-			cout << "Adding new publication to the library" << endl;
-			type = m_pubType.run();
+			if (type == 0)
+				break;
 
+			//if (type == 1)
+			//{
+			//	dynPublication = new Book();
+			//	if (dynPublication)
+			//	{
+			//		dynPublication->read(cin);
+			//	}
+			//	if (cin.fail())
+			//	{
+			//		cin.clear();
+			//		cin.ignore(1000, '\n');
+			//		cout << "Aborted!";
+			//		//delete dynPublication;
+			//		//dynPublication = nullptr;
+			//	}
+			//}
+			//else if (type == 2)
+			//{
+			//	dynPublication = new Publication();
+			//	if (dynPublication) {
+			//		dynPublication->read(cin);
+			//	}
+			//	if (cin.fail())
+			//	{
+			//		cin.clear();
+			//		cin.ignore(1000, '\n');
+			//		cout << "Aborted!";
+			//		//delete dynPublication;
+			//		//dynPublication = nullptr;
+			//	}
+			//}
 			if (type == 1)
-			{
 				dynPublication = new Book;
-				if (dynPublication)
-				{
-					dynPublication->read(cin);
-				}
-				if (cin.fail())
-				{
-					cin.clear();
-					cin.ignore(1000, '\n');
-					cout << "Aborted!";
-					//delete dynPublication;
-					//dynPublication = nullptr;
-				}
-			}
-			else if (type == 2)
-			{
+			else if(type == 2)
 				dynPublication = new Publication;
-				if (dynPublication) {
-					dynPublication->read(cin);
-				}
-				if (cin.fail())
-				{
-					cin.clear();
-					cin.ignore(1000, '\n');
-					cout << "Aborted!";
-					//delete dynPublication;
-					//dynPublication = nullptr;
-				}
+			cin.ignore(1000, '\n');
+			cin >> *dynPublication;
+			//dynPublication->read(cin);
+
+			if (cin.fail())
+			{
+				cin.ignore(1000, '\n');
+				cin.clear();
+				break;
 			}
 
-			if (cin.good())
-			{
-				//cout << "Add this publication to the library?" << endl;
-				if (confirm("Add this publication to the library?")) {
-					if (dynPublication)
-					{
-						m_LLRN++;
-						m_PPA[m_NOLP]->setRef(m_LLRN);
-						m_PPA[m_NOLP] = dynPublication;
-						m_NOLP++;
-						m_changed = true;
-						cout << "Publication added" << endl;
-					}
-					else
-					{
-						cout << "Failed to add publication!" << endl;
-						//delete dynPublication;
-						//dynPublication = nullptr;
-					}
+			if (confirm("Add this publication to the library?")) {
 
+				aborted = false;
+
+				if (*dynPublication)
+				{
+					/*m_LLRN++;
+					m_PPA[m_NOLP]->setRef(m_LLRN);
+					m_PPA[m_NOLP] = dynPublication;
+					m_NOLP++;
+					m_changed = true;*/
+					m_changed = true;
+					m_LLRN++;
+					m_PPA[m_NOLP++] = dynPublication;
+					dynPublication->setRef(m_LLRN);
+
+					cout << "Publication added" << endl;
 				}
 				else
 				{
-					cout << "Aborted!";
-					//maybe not required
-					//delete dynPublication;
-					//dynPublication = nullptr;
-					//delete dynPublication;
-					//dynPublication = nullptr;
-				};
+					cout << "Failed to add publication!" << endl;
+					delete dynPublication;
+				}
+
 			}
-			//delete[] dynPublication;
+			else
+				break;
+
+		} while (0);
+
+		if (aborted)
+		{
+			delete dynPublication;
+			cout << "Aborted!" << endl;
 		}
-		//maybe not required
-		/*delete dynPublication;
-		dynPublication = nullptr;*/
 	};
 
 	void LibApp::removePublication() {
-		int libRef{};
+
 		cout << "Removing publication from library" << endl;
-		libRef = search(1); // search all publication
+		int libRef = search(1); // search all publication
 
 		if (libRef && confirm("Remove this publication from the library?")) {
 
-			m_PPA[libRef]->setRef(0); // not sure how shoud put the selected one to zero
+			//m_PPA[libRef]->setRef(0); // not sure how shoud put the selected one to zero
+			getPub(libRef)->setRef(0);
 			m_changed = true;
 			cout << "Publication removed" << endl;
 		}
 	};
 
 	void LibApp::checkOutPub() {
-		/*search();
-		if (confirm("Check out publication?")) {
 
-
-			m_changed = true;
-			cout << "Publication checked out" << endl;
-		}*/
 		int membership{};
 		int libRef{};
 		cout << "Checkout publication from the library" << endl;
 		libRef = search(3);// available publication only(not on loan)
+
 		if (libRef && confirm("Check out publication ?")) {
 
+			cout << "Enter Membership number: ";
 			membership = Utils::getInt(10000, 99999, "Invalid membership number, try again: ");
 
-			m_PPA[libRef]->set(membership);
-
+			//m_PPA[libRef]->set(membership);
+			getPub(libRef)->set(membership);
 			m_changed = true;
+
 			cout << "Publication checked out" << endl;
 		};
 	};
@@ -474,12 +477,12 @@ namespace sdds {
 
 	};
 	Publication* LibApp::getPub(int libRef) {
-		Publication* result = nullptr;
+		//Publication* result = nullptr;
 		for (int i = 0; i < m_NOLP; i++)
 		{
-			if (m_PPA[i]->getRef() == libRef) result = m_PPA[i];
+			if (m_PPA[i]->getRef() == libRef) return m_PPA[i];
 		}
-		return result;
+		return nullptr;
 	}
 
 }
