@@ -56,13 +56,13 @@ namespace sdds {
 
 	public:
 
-		LibApp(char* fileName);
+		LibApp(const char* fileName);
 		~LibApp();
 		void run();
 
 		Publication* getPub(int libRef);
 
-		//void newPublication();
+		
 	};
 
 }
