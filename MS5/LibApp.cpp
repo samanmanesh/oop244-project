@@ -244,10 +244,25 @@ namespace sdds {
 	};
 
 	void LibApp::returnPub() {
-		search(1);
-		cout << "Returning publication" << endl;
+		int libRef{};
+		cout << "Return publication to the library" << endl;
+		libRef=search(2); // search for on loan publication
+		if (libRef && confirm("Return Publication?")) {
+
+			if (m_PPA[libRef]->checkoutDate() > SDDS_MAX_LOAN_DAYS) {
+				
+				int extraDays = m_PPA[libRef]->checkoutDate() - SDDS_MAX_LOAN_DAYS;
+				int penalty =  extraDays* (50/100);
+
+				cout << "Please pay $" << penalty << " penalty for being "<< extraDays <<" days late!" << endl;
+			}
+			m_PPA[libRef]->set(0);
+			m_changed = true;
+			cout << "Publication returned" << endl;
+		}
+		/*cout << "Returning publication" << endl;
 		cout << "Publication returned" << endl;
-		m_changed = true;
+		m_changed = true;*/
 	};
 
 	LibApp::~LibApp() {
@@ -355,7 +370,7 @@ namespace sdds {
 		int libRef{};
 		cout << "Checkout publication from the library" << endl;
 		libRef=search(3);// available publication only(not on loan)
-		if (confirm("Check out publication ?")) {
+		if (libRef && confirm("Check out publication ?")) {
 			
 			membership = Utils::getInt(10000, 99999, "Invalid membership number, try again: ");
 			
@@ -428,18 +443,5 @@ namespace sdds {
 		}
 		return result;
 	}
-	/*void LibApp::newPublication() {
-		char type{};
-
-		if (m_NOLP == SDDS_LIBRARY_CAPACITY)
-		{
-			cout << "Library is at its maximum capacity!" << endl;
-		}
-		else
-		{
-			cout << "Adding new publication to the library" << endl;
-
-		}
-
-	};*/
+	
 }
