@@ -168,9 +168,9 @@ namespace sdds {
 					for (int i = 0; i < m_NOLP; i++)
 					{
 						const char taypeOfPPA = m_PPA[i]->type();
-						int loanStuts = m_PPA[i]->onLoan();
+						int loanStatus = m_PPA[i]->onLoan();
 
-						if (!loanStuts && taypeOfPPA == 'B' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title)) {
+						if (!loanStatus && taypeOfPPA == 'B' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title)) {
 
 							PBS << m_PPA[i];
 						}
@@ -181,9 +181,9 @@ namespace sdds {
 					for (int i = 0; i < m_NOLP; i++)
 					{
 						const char taypeOfPPA = m_PPA[i]->type();
-						int loanStuts = m_PPA[i]->onLoan();
+						int loanStatus = m_PPA[i]->onLoan();
 
-						if (!loanStuts && taypeOfPPA == 'P' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title))
+						if (!loanStatus && taypeOfPPA == 'P' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title))
 						{
 							PBS << m_PPA[i];
 						};
@@ -202,9 +202,9 @@ namespace sdds {
 					for (int i = 0; i < m_NOLP; i++)
 					{
 						const char taypeOfPPA = m_PPA[i]->type();
-						int loanStuts = m_PPA[i]->onLoan();
+						int loanStatus = m_PPA[i]->onLoan();
 
-						if (!loanStuts && taypeOfPPA == 'B' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title)) {
+						if (!loanStatus && taypeOfPPA == 'B' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title)) {
 
 							PBS << m_PPA[i];
 						}
@@ -215,9 +215,9 @@ namespace sdds {
 					for (int i = 0; i < m_NOLP; i++)
 					{
 						const char taypeOfPPA = m_PPA[i]->type();
-						int loanStuts = m_PPA[i]->onLoan();
+						int loanStatus = m_PPA[i]->onLoan();
 
-						if (!loanStuts && taypeOfPPA == 'P' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title))
+						if (!loanStatus && taypeOfPPA == 'P' && m_PPA[i]->getRef() && m_PPA[i]->operator==(title))
 						{
 							PBS << m_PPA[i];
 						};
@@ -331,11 +331,13 @@ namespace sdds {
 	};
 
 	void LibApp::removePublication() {
+		int libRef{};
 		cout << "Removing publication from library" << endl;
-		search(1);
+		libRef=search(1); // search all publication
 
-		if (confirm("Remove this publication from the library?")) {
-
+		if (libRef && confirm("Remove this publication from the library?")) {
+			
+			m_PPA[libRef]->setRef(0); // not sure how shoud put the selected one to zero
 			m_changed = true;
 			cout << "Publication removed" << endl;
 		}
@@ -344,6 +346,7 @@ namespace sdds {
 	void LibApp::checkOutPub() {
 		search(1);
 		if (confirm("Check out publication?")) {
+			
 
 			m_changed = true;
 			cout << "Publication checked out" << endl;
