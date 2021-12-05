@@ -61,6 +61,8 @@ namespace sdds {
 		void run();
 
 		Publication* getPub(int libRef);
+
+		//void newPublication();
 	};
 
 }

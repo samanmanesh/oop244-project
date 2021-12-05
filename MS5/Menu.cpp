@@ -137,7 +137,7 @@ namespace sdds {
 
 		displayMenu();
 
-		selectedItem = getInt(0, m_noMenuPointers, "Invalid Selection, try again: ");
+		selectedItem = Utils::getInt(0, m_noMenuPointers, "Invalid Selection, try again: ");
 		
 		return selectedItem;
 	}
@@ -148,7 +148,7 @@ namespace sdds {
 
 		displayMenu();
 
-		selectedItem = getInt(0, m_noMenuPointers, "Invalid Selection, try again: ");
+		selectedItem = Utils::getInt(0, m_noMenuPointers, "Invalid Selection, try again: ");
 
 		return selectedItem;
 	};

@@ -230,11 +230,11 @@ namespace sdds {
 			}
 		}
 		else if (selectedPubType == 0) cout << "Aborted!" << endl;
-		
+
 		if (selectedPubType != 0 && PBS) // matches is found
 		{
 			PBS.sort();
-			libRef= PBS.run();
+			libRef = PBS.run();
 		}
 		else
 		{
@@ -255,13 +255,79 @@ namespace sdds {
 	};
 
 	void LibApp::newPublication() {
-		cout << "Adding new publication to library" << endl;
+		/*cout << "Adding new publication to library" << endl;
 
 		if (confirm("Add this publication to library?"))
 		{
 			m_changed = true;
 			cout << "Publication added" << endl;
+		}*/
+
+		int type = 0;
+		Publication* dynPublication{};
+
+		if (m_NOLP == SDDS_LIBRARY_CAPACITY)
+		{
+			cout << "Library is at its maximum capacity!" << endl;
 		}
+		else
+		{
+			cout << "Adding new publication to the library" << endl;
+			type = m_pubType.run();
+
+			if (type == 1)
+			{
+				dynPublication = new Book;
+				dynPublication->read(cin);
+				if (cin.fail())
+				{
+					cin.clear();
+					cin.ignore(1000, '\n');
+					cout << "Aborted!";
+				}
+			}
+			else if (type == 2)
+			{
+				dynPublication = new Publication;
+				dynPublication->read(cin);
+				if (cin.fail())
+				{
+					cin.clear();
+					cin.ignore(1000, '\n');
+					cout << "Aborted!";
+				}
+			}
+			if (cin)
+			{
+				//cout << "Add this publication to the library?" << endl;
+				if (confirm("Add this publication to the library?")) {
+					if (dynPublication)
+					{
+						m_LLRN++;
+						m_PPA[m_NOLP]->setRef(m_LLRN);
+						m_PPA[m_NOLP] = dynPublication;
+						m_NOLP++;
+						m_changed = true;
+						cout << "Publication added" << endl;
+					}
+					else
+					{
+						cout << "Failed to add publication!" << endl;
+						delete[] dynPublication;
+					}
+							
+				}
+				else
+				{
+					cout << "Aborted!";
+					//maybe not required
+					delete[] dynPublication;
+				};
+			}
+			
+		}
+		//maybe not required
+		delete[] dynPublication;
 	};
 
 	void LibApp::removePublication() {
@@ -346,5 +412,18 @@ namespace sdds {
 		}
 		return result;
 	}
+	/*void LibApp::newPublication() {
+		char type{};
 
+		if (m_NOLP == SDDS_LIBRARY_CAPACITY)
+		{
+			cout << "Library is at its maximum capacity!" << endl;
+		}
+		else
+		{
+			cout << "Adding new publication to the library" << endl;
+
+		}
+
+	};*/
 }
