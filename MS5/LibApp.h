@@ -1,14 +1,18 @@
 /* Citation and Sources...
-Final Project Milestone 2
+Final Project Milestone 5
 Module: LibApp
-Filename: LibApp.
+Filename: LibApp.h
 Version 1.0
-Author	Mohammadhossein Sobhanmanesh
+// Student Name  : Mohammadhossein Sobhanmanesh
+// Student ID    : 116523200
+// Student Email : msobhanmanesh@myseneca.ca
+// Date          : 2021-12-5
+// Course Section: OOP244-NAA
 Revision History
 -----------------------------------------------------------
 Date      Reason
-2020/11/16  Preliminary release
-2020/11/16  Debugged DMA
+2020/12/5  Preliminary release
+2020/12/5  Debugged DMA
 -----------------------------------------------------------
 I have done all the coding by myself and only copied the code
 that my professor provided to complete my workshops and assignments.
