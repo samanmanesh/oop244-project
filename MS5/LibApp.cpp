@@ -125,10 +125,15 @@ namespace sdds {
 		int libRef{};
 		bool aborted = true;
 
-		selectedPubType = m_pubType.run();
 
-		if (selectedPubType != 0)
+
+		do
 		{
+			selectedPubType = m_pubType.run();
+			if (selectedPubType == 0)
+				break;
+			cin.ignore(1000, '\n');
+
 			cout << "Publication Title: ";
 			cin.getline(title, 256);
 
@@ -226,24 +231,27 @@ namespace sdds {
 					aborted = false;
 				}
 			}
-		}
-		else if (selectedPubType == 0)
-			aborted = false;
 
-		if (selectedPubType != 0 && PBS) {
-			PBS.sort();
-			libRef = PBS.run();
-
-			if (libRef > 0)
-			{
-				cout << *getPub(libRef) << endl;
+			else if (selectedPubType == 0)
 				aborted = false;
+
+			if (selectedPubType != 0 && PBS) {
+				PBS.sort();
+				libRef = PBS.run();
+
+				if (libRef > 0)
+				{
+					cout << *getPub(libRef) << endl;
+					aborted = false;
+				}
 			}
-		}
-		else
-		{
-			cout << "No matches found!" << endl;
-		}
+			else
+			{
+				cout << "No matches found!" << endl;
+			}
+
+		} while (0);
+
 
 		if (aborted)
 			cout << "Aborted!" << endl;
@@ -259,7 +267,7 @@ namespace sdds {
 		libRef = search(2); // search for on loan publication
 
 		if (libRef && confirm("Return Publication?")) {
-			
+
 			Publication* pbs = getPub(libRef);
 
 			int daysOnloan = Date() - pbs->checkoutDate();
@@ -349,8 +357,11 @@ namespace sdds {
 
 	void LibApp::removePublication() {
 
-		cout << "Removing publication from library" << endl;
+		cout << "Removing publication from the library" << endl;
+
+
 		int libRef = search(1); // search all publication
+		
 
 		if (libRef && confirm("Remove this publication from the library?")) {
 

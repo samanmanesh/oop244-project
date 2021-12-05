@@ -10,6 +10,7 @@
 /////////////////////////////////////////////////////////////////
 #ifndef SDDS_PUBLICATIONSELECTOR_H
 #define SDDS_PUBLICATIONSELECTOR_H
+#include <cstring>
 #include "Publication.h"
 namespace sdds {
    class PublicationSelector {
