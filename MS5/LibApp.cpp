@@ -291,7 +291,7 @@ namespace sdds {
 	};
 
 	LibApp::~LibApp() {
-		for (int i = 0; m_PPA[i]; i++) {  //free the allocated memory
+		for (int i = 0; m_NOLP; i++) {  //free the allocated memory
 			delete m_PPA[i];
 		}
 	};
@@ -345,7 +345,7 @@ namespace sdds {
 					cout << "Failed to add publication!" << endl;
 					delete dynPublication;
 				}
-
+				
 			}
 			else
 				break;
