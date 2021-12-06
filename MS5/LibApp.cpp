@@ -74,7 +74,7 @@ namespace sdds {
 		ifstream infile(m_fileName);
 		char type{};
 		int i;
-		for (i = 0; infile && SDDS_LIBRARY_CAPACITY; i++) {
+		for (i = 0; infile && i < SDDS_LIBRARY_CAPACITY; i++) {
 			infile >> type;
 			infile.ignore();
 
@@ -96,7 +96,7 @@ namespace sdds {
 				else
 					delete m_PPA[m_NOLP];
 			}
-			infile.ignore(1000, '\n');
+			//infile.ignore(1000, '\n');
 		}
 		if (m_NOLP)
 			m_LLRN = m_PPA[m_NOLP - 1]->getRef();
@@ -291,7 +291,8 @@ namespace sdds {
 	};
 
 	LibApp::~LibApp() {
-		for (int i = 0; m_NOLP; i++) {  //free the allocated memory
+		for (int i = 0; i < m_NOLP; i++) {  //free the allocated memory
+			
 			delete m_PPA[i];
 		}
 	};
@@ -300,6 +301,7 @@ namespace sdds {
 		if (m_NOLP == SDDS_LIBRARY_CAPACITY)
 		{
 			cout << "Library is at its maximum capacity!" << endl;
+			
 			return;
 		}
 
@@ -336,7 +338,8 @@ namespace sdds {
 				{
 					m_changed = true;
 					m_LLRN++;
-					m_PPA[m_NOLP++] = dynPublication;
+					m_PPA[m_NOLP] = dynPublication;
+					m_NOLP++;
 					dynPublication->setRef(m_LLRN);
 					cout << "Publication added" << endl;
 				}
@@ -344,6 +347,7 @@ namespace sdds {
 				{
 					cout << "Failed to add publication!" << endl;
 					delete dynPublication;
+					//dynPublication = nullptr;
 				}
 				
 			}
