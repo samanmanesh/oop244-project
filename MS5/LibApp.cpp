@@ -125,8 +125,6 @@ namespace sdds {
 		int libRef{};
 		bool aborted = true;
 
-
-
 		do
 		{
 			selectedPubType = m_pubType.run();
@@ -244,6 +242,8 @@ namespace sdds {
 					cout << *getPub(libRef) << endl;
 					aborted = false;
 				}
+
+				if (libRef==0) aborted = true;
 			}
 			else
 			{
