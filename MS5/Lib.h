@@ -31,9 +31,9 @@ namespace sdds {
 	// The width in which the author name of a book should be printed on the console
 	const int SDDS_SHELF_ID_LEN = 4;
 	// The width in which the shelf id of a publication should be printed on the console
-	//const int SDDS_LIBRARY_CAPACITY = 5000;
+	const int SDDS_LIBRARY_CAPACITY = 5000;
 	// Maximum number of publications the library can hold.
-	const int SDDS_LIBRARY_CAPACITY = 333;
+	//const int SDDS_LIBRARY_CAPACITY = 333;
 
 }
 
